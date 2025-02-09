@@ -1,3 +1,5 @@
 "use client";
 
-export * from "lenis/react";
+import { ReactLenis } from "lenis/react";
+
+export { ReactLenis };

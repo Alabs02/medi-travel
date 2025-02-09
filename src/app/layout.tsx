@@ -17,6 +17,8 @@ import { seo } from "@/constants";
 
 import type { Metadata, Viewport } from "next";
 import { BASE_URL } from "./sitemap";
+import { PageTransition } from "@/layouts";
+import { QueryProvider } from "@/components/providers";
 
 export const metadata: Metadata = {
   metadataBase: new URL(BASE_URL),
@@ -29,9 +31,9 @@ export const metadata: Metadata = {
       follow: true,
       "max-video-preview": -1,
       "max-image-preview": "large",
-      "max-snippet": -1,
-    },
-  },
+      "max-snippet": -1
+    }
+  }
 };
 
 export const viewport: Viewport = {
@@ -42,13 +44,13 @@ export const viewport: Viewport = {
   interactiveWidget: "resizes-visual",
   themeColor: [
     { media: "(prefers-color-scheme: light)", color: "#0b1426" },
-    { media: "(prefers-color-scheme: dark)", color: "#e3e7ea" },
+    { media: "(prefers-color-scheme: dark)", color: "#e3e7ea" }
   ],
-  colorScheme: "light",
+  colorScheme: "light"
 };
 
 export default function RootLayout({
-  children,
+  children
 }: Readonly<{
   children: React.ReactNode;
 }>) {
@@ -65,9 +67,13 @@ export default function RootLayout({
       )}
     >
       <ReactLenis root>
-        <body className={`${geistSans.variable} antialiased`}>
+        <body
+          className={`${geistSans.variable} antialiased grid w-full min-h-screen`}
+        >
           <RealViewport />
-          {children}
+          <QueryProvider>
+            <PageTransition>{children}</PageTransition>
+          </QueryProvider>
         </body>
       </ReactLenis>
     </html>

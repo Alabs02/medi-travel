@@ -1,3 +1,4 @@
+export * from "./button";
 export * from "./checkbox";
 export * from "./dialog";
 export * from "./drawer";
@@ -9,3 +10,9 @@ export * from "./toaster";
 export * from "./tooltip";
 export * from "./separator";
 export * from "./scroll-area";
+export * from "./toolbar";
+export * from "./gradient-text";
+export * from "./motion-button";
+export * from "./popover";
+export * from "./command";
+export * from "./hero-video-dialog";

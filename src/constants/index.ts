@@ -1,7 +1,12 @@
 import { BASE_URL } from "@/app/sitemap";
 
 export const ImagePaths = {
-  BRAND_LOGO: "/images/medi-travel-logo.webp"
+  BRAND_LOGO: "/images/medi-travel-logo.webp",
+  HERO_THUMBNAIL: "/images/hero-video-thumbnail.webp",
+  BBC_LOGO: "/images/bbc.webp",
+  WHO_LOGO: "/images/who.webp",
+  BLOOMBERG_LOGO: "/images/blloomberg.webp",
+  THE_GUARDIAN_LOGO: "/images/the-guardian.webp"
 };
 
 export const seo = {
@@ -57,6 +62,19 @@ export const seo = {
   }
 };
 
+export const globalMediaFeatures = [
+  ImagePaths.BLOOMBERG_LOGO,
+  ImagePaths.BBC_LOGO,
+  ImagePaths.WHO_LOGO,
+  ImagePaths.THE_GUARDIAN_LOGO,
+];
+
+export const heroVideo = {
+  videoSrc: "https://youtu.be/D9yPeZip_h4?si=zkTaQV7itn_7cnFn",
+  thumbnailSrc: ImagePaths.HERO_THUMBNAIL,
+  thumbnailAlt: "Hero Video | MediTravel"
+}
+
 export const whileTapOptions = {
   whileTap: { scale: 0.9 },
   initial: { scale: 1 },
@@ -71,3 +89,5 @@ export const whileTapOptions = {
     duration: 0.03
   }
 };
+
+export * from "./api.routes";

@@ -2,36 +2,61 @@
 @tailwind components;
 @tailwind utilities;
 
-*,html,body {
-  font-family: 'Geist', 'Geist Fallback', 'Arial', sans-serif;
+*,
+html,
+body {
+  font-family: "Geist", "Geist Fallback", "Arial", sans-serif;
 }
 
-button,a {
-  font-family: 'Outfit', 'Outfit Fallback', 'Segoe UI', sans-serif;
+button,
+a {
+  font-family: "Outfit", "Outfit Fallback", "Segoe UI", sans-serif;
 }
 
-h1,h2,h3,h4,h5,h6,label,summary {
-  font-family: 'Plus Jakarta Sans', 'Plus Jakarta Sans Fallback', 'Helvetica', sans-serif;
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+label,
+summary {
+  font-family: "Plus Jakarta Sans", "Plus Jakarta Sans Fallback", "Helvetica",
+    sans-serif;
 }
 
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-  -webkit-appearance: none !important;
-  margin: 0;
-}
-
-input[type=number] {
-  -moz-appearance: textfield !important;
-}
-
-::selection {
+*::selection {
   background-color: hsl(var(--primary));
   color: hsl(var(--primary-foreground));
 }
 
-::-moz-selection {
+*::-moz-selection {
   background-color: hsl(var(--primary));
   color: hsl(var(--primary-foreground));
+}
+
+*::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+*::-webkit-scrollbar {
+  width: 10px !important;
+  height: 10px !important;
+  background-color: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+  cursor: grab !important;
+  background-color: hsl(var(--primary) / 0.20);
+  border-radius: 10px;
+}
+
+/* Firefox */
+@supports (-moz-appearance: none) {
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: hsl(var(--primary) / 0.20) transparent;
+  }
 }
 
 @layer base {
@@ -44,7 +69,7 @@ input[type=number] {
 
     --popover: 0 0% 100%;
     --popover-foreground: 222 40% 11%;
-    
+
     --primary: 220 55% 10%;
     --primary-foreground: 220 7% 91%;
 
@@ -57,8 +82,8 @@ input[type=number] {
     --accent: 265 45% 58%;
     --accent-foreground: 267 43% 96%;
 
-    --info: 221 72% 43%;
-    --info-foreground: 224 52% 94%;
+    --info: 217 91% 60%;
+    --info-foreground: 215 90% 96%;
 
     --success: 160 84% 39%;
     --success-foreground: 159 55% 94%;
@@ -85,7 +110,7 @@ input[type=number] {
 
     --card: 222 40% 11%;
     --card-foreground: 220 7% 91%;
-    
+
     --popover: 222 40% 11%;
     --popover-foreground: 220 7% 91%;
 
@@ -101,8 +126,8 @@ input[type=number] {
     --accent: 267 43% 96%;
     --accent-foreground: 265 45% 58%;
 
-    --info: 221 72% 43%;
-    --info-foreground: 224 52% 94%;
+    --info: 217 91% 60%;
+    --info-foreground: 215 90% 96%;
 
     --success: 160 84% 39%;
     --success-foreground: 159 55% 94%;
@@ -125,7 +150,48 @@ input[type=number] {
   * {
     @apply border-border;
   }
+
   body {
     @apply bg-background text-foreground;
   }
+
+  .text-md {
+    @apply font-outfit text-sm md:text-[0.94rem] leading-6;
+  }
+
+  .text-cta {
+    @apply text-md font-medium tracking-wide capitalize;
+  }
+
+  .text-normal {
+    text-transform: none !important;
+  }
+
+  .container {
+    @apply w-full px-5 lg:px-0 lg:!w-[90%] xl:!w-[85%] 2xl:!w-[70%];
+  }
+
+  .section {
+    @apply py-6 lg:py-12 xl:py-16 2xl:py-24;
+  }
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none !important;
+  margin: 0;
+}
+input[type="number"] {
+  -moz-appearance: textfield !important;
+}
+
+.group\/link::before,
+.group\/link span {
+  transition-property: transform;
+  transition-timing-function: cubic-bezier(0.86, 0.6, 0.08, 1.01);
+  transition-duration: 0.3s;
+}
+.group\/link:hover::before,
+.group\/link:hover span {
+  transition-duration: 0.4s;
 }
