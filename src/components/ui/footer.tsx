@@ -21,7 +21,7 @@ const Footer = () => {
 
   return (
     <motion.div className="bg-primary w-full min-h-72 shadow-sm grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 relative">
-      <div className="w-full h-full relative z-20 bg-gradient-to-b from-primary-foreground/10 via-primary-foreground/5 to-transparent backdrop-filter p-[30px] flex flex-col gap-y-[15px] 2xl:col-span-2">
+      <div className="w-full h-full relative z-20 bg-gradient-to-b from-primary-foreground/10 via-primary-foreground/5 to-transparent backdrop-filter px-5 py-[30px] 2xl:px-[30px] flex flex-col gap-y-[15px] 2xl:col-span-2">
         <Link href={"/"} className="flex space-x-2.5 items-center" passHref>
           <div className="size-12 relative overflow-hidden">
             <Image
@@ -36,10 +36,15 @@ const Footer = () => {
             />
           </div>
 
-          <TitleTag className="font-plus-sans font-bold text-xl text-primary-foreground brightness-125 tracking-[0.015em] hidden lg:inline-block">
-            MediTravel
-          </TitleTag>
+          <div className="flex flex-col">
+            <TitleTag className="font-plus-sans font-bold text-xl text-primary-foreground brightness-125 tracking-[0.015em]">
+              MediTravel
+            </TitleTag>
+            <span className="font-geist-sans font-light text-sm 2xl:text-sm text-primary-foreground/55 hidden 2xl:inline-block transition-all duration-200">Your Trusted Partner in Transformation</span>
+          </div>
         </Link>
+        <span className="font-geist-sans font-light text-xs 2xl:text-sm text-primary-foreground/55 block 2xl:hidden transition-all duration-200">Your Trusted Partner in Transformation</span>
+
 
         <div className="flex items-center space-x-2.5 xl:space-x-5 mt-5">
           <IconBrandInstagram
