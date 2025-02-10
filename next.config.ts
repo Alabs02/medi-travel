@@ -8,7 +8,7 @@ const nextConfig: NextConfig = withBundleAnalyzer({
   output: "standalone",
   reactStrictMode: true,
   images: {
-    domains: ["images.unsplash.com", "v5.airtableusercontent.com"],
+    domains: ["images.unsplash.com", "source.unsplash.com"],
     remotePatterns: [
       {
         protocol: "https",
@@ -19,7 +19,7 @@ const nextConfig: NextConfig = withBundleAnalyzer({
       },
       {
         protocol: "https",
-        hostname: "v5.airtableusercontent.com",
+        hostname: "source.unsplash.com",
         port: '',
         pathname: "/**",
         search: ""

@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Toolbar } from "@/components/ui";
+import { Toolbar, Footer } from "@/components/ui";
 import { motion } from "framer-motion";
 
 const PageLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -10,6 +10,7 @@ const PageLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
       <motion.section className="flex flex-col w-full h-full">
         <Toolbar />
         {children}
+        <Footer />
       </motion.section>
     </React.Fragment>
   );

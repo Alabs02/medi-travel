@@ -11,11 +11,13 @@ import { usePathname } from "next/navigation";
 const MotionLink = motion.create(NextLink);
 
 const Button = React.forwardRef<HTMLButtonElement, UI.MotionButtonProps>(
-  ({ className, variant = "accent", children, ...rest }, ref) => (
+  ({ className, variant = "accent", children, disabled, onClick, ...rest }, ref) => (
     <motion.button
       ref={ref}
       {...whileTapOptions}
       {...rest}
+      disabled={disabled}
+      onClick={onClick}
       className={cn(
         "group/btn relative overflow-hidden rounded-md bg-primary hover:brightness-110 py-2.5 px-5 text-primary-foreground font-medium transition-colors duration-300",
         className
@@ -41,17 +43,19 @@ const Button = React.forwardRef<HTMLButtonElement, UI.MotionButtonProps>(
 );
 
 const OutlinedButton = React.forwardRef<HTMLButtonElement, UI.MotionButtonProps>(
-  ({ className, variant = "accent", children, ...rest }, ref) => (
+  ({ className, variant = "accent", children, disabled, onClick, ...rest }, ref) => (
     <motion.button
       ref={ref}
       {...whileTapOptions}
       {...rest}
+      onClick={onClick}
+      disabled={disabled}
       className={cn(
         "group/btn relative overflow-hidden rounded-md bg-transparent border-none !shadow-[0_0_0_1px] !shadow-hairline/25 hover:!shadow-accent/50 hover:brightness-110 py-2.5 px-5 font-medium text-primary/85 hover:text-accent transition-colors duration-300",
         className
       )}
     >
-      <motion.div className="flex items-center gap-2 md:gap-2.5">
+      <motion.div className="flex items-center gap-2 md:gap-2.5 w-full">
         {children}
       </motion.div>
 
@@ -71,11 +75,13 @@ const OutlinedButton = React.forwardRef<HTMLButtonElement, UI.MotionButtonProps>
 );
 
 const GhostButton = React.forwardRef<HTMLButtonElement, UI.MotionButtonProps>(
-  ({ className, variant = "accent", children, ...rest }, ref) => (
+  ({ className, variant = "accent", children, disabled, onClick, ...rest }, ref) => (
     <motion.button
       ref={ref}
       {...whileTapOptions}
       {...rest}
+      onClick={onClick}
+      disabled={disabled}
       className={cn(
         "group/btn relative overflow-hidden rounded-md bg-transparent border-none hover:bg-muted py-2.5 px-5 font-medium text-primary/75 hover:text-primary/85 transition-colors duration-300",
         className

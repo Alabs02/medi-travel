@@ -8,25 +8,29 @@ export type Location = {
 };
 
 export type TreatmentType = Pick<Location, "id" | "value">;
-export type Pricerange = string;
+export type PriceRange = [number, number];
 
 export type QueryStore = {
   query: string;
   locations: Location[];
-  priceRanges: Pricerange[];
+  priceRanges: PriceRange;
   treatmentTypes: TreatmentType[];
+  nearbyLocations: any[]; // ! TBD
+
+  getLocations: () => Location[];
+  getPriceRanges: () => PriceRange;
+  getTreatmentTypes: () => TreatmentType[];
 
   setQuery: (query: string) => void;
   setLocations: (locations: Location[]) => void;
-  setPriceRanges: (priceRanges: Pricerange[]) => void;
+  setPriceRanges: (priceRanges: PriceRange) => void;
+  setNearbyLocations: (nearbyLocations: any[]) => void;
   setTreatmentTypes: (treatmentTypes: TreatmentType[]) => void;
 
   addLocation: (location: Location) => void;
-  addPriceRange: (priceRange: string) => void;
   addTreatmentType: (treatmentType: TreatmentType) => void;
 
   updateLocation: (id: string, updatedLocation: Partial<Location>) => void;
-  updatePriceRange: (index: number, newPriceRange: string) => void;
   updateTreatmentType: (
     id: string,
     updatedTreatment: Partial<TreatmentType>
@@ -34,7 +38,7 @@ export type QueryStore = {
 
   removeQuery: () => void;
   removeLocation: (id: string) => void;
-  removePriceRange: (index: number) => void;
+  // removePriceRange: (index: number) => void;
   removeTreatmentType: (id: string) => void;
 
   resetQuery: () => void;

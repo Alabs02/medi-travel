@@ -1,15 +1,31 @@
 "use client";
 
-import { GradientText, Input, Motion, HeroVideoDialog } from "@/components/ui";
-import { IconAdjustmentsSpark, IconListSearch } from "@tabler/icons-react";
+import {
+  GradientText,
+  Input,
+  Motion,
+  HeroVideoDialog,
+  ClinicCard,
+  BlurFade
+} from "@/components/ui";
+import {
+  IconAdjustmentsSpark,
+  IconFilterDollar,
+  IconListSearch
+} from "@tabler/icons-react";
 import { globalMediaFeatures, heroVideo } from "@/constants";
 import { PageLayout } from "@/layouts";
 import { useCallback, useState } from "react";
 import { motion } from "framer-motion";
-import { QueryFormDialog } from "@/components/forms";
+import {
+  LocationDropdown,
+  QueryFormDialog,
+  TreatmentDropdown
+} from "@/components/forms";
 import { useQueryStore } from "@/store/query";
-import { debounce } from "@/_";
+import { debounce, kebabCase } from "@/_";
 import Image from "next/image";
+import { clinics } from "@/db";
 
 const Home = () => {
   const [openLocationBox, setOpenLocationBox] = useState(false);
@@ -34,7 +50,7 @@ const Home = () => {
         <div className="container section h-full grid grid-cols-12 gap-5">
           <div className="col-span-12 lg:col-span-7 flex flex-col gap-y-7 2xl:gap-y-[30px]">
             <h2>
-              <div className="flex space-x-2.5">
+              <div className="flex items-center space-x-2.5">
                 <GradientText
                   text="Save Up to"
                   className="font-plus-sans font-extrabold text-3xl lg:text-4xl xl:text-5xl 2xl:text-6xl !leading-[1.2] text-pretty whitespace-nowrap"
@@ -115,7 +131,7 @@ const Home = () => {
           <div className="col-span-12 lg:col-span-5 flex flex-col gap-y-5">
             <HeroVideoPreview />
 
-            <h3 className="text-xl font-bold text-primary/75">
+            <h3 className="text-xl font-bold text-primary/75 2xl:mt-5">
               Featured in Global Media
             </h3>
             <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-2.5">
@@ -140,7 +156,67 @@ const Home = () => {
         </div>
       </header>
 
-      <main className="h-screen"></main>
+      <main className="w-full flex justify-center realtive z-10">
+        <div className="container section h-full flex flex-col gap-y-5 items-center">
+          <h4
+            className="text-center"
+            aria-label="Top-Rated Clinics, Affordable Prices"
+          >
+            <div className="flex items-center space-x-2.5">
+              <GradientText
+                text="Top-Rated Clinics,"
+                className="font-plus-sans font-extrabold text-3xl lg:text-4xl 2xl:text-5xl !leading-[1.2] text-pretty whitespace-nowrap"
+              />{" "}
+              <GradientText
+                text="Affordable Prices"
+                gradient="bg-gradient-to-b from-destructive to-accent transition-all duration-500"
+                className="font-plus-sans font-extrabold text-3xl lg:text-4xl 2xl:text-5xl !leading-[1.2] text-pretty whitespace-nowrap transition-all duration-300"
+              />{" "}
+            </div>
+          </h4>
+
+          <p className="text-center lg:text-lg 2xl:text-xl text-secondary/75 mt-2.5 w-full lg:max-w-[90%] 2xl:max-w-[80%]">
+            Discover accredited hospitals & clinics that match US standards—at a
+            fraction of the cost.
+          </p>
+
+          <div className="flex flex-row items-center justify-center mt-2.5 gap-5 w-full flex-wrap overflow-hidden bg-transparent">
+            <div className="grid grid-cols-1 min-w-52 max-w-56 my-px ml-px">
+              <LocationDropdown />
+            </div>
+
+            <div className="grid grid-cols-1 min-w-56 max-w-60 my-px">
+              <TreatmentDropdown />
+            </div>
+
+            <Motion.OutlinedButton
+              className="h-10 my-px"
+              type="button"
+              onClick={() => setOpenLocationBox(true)}
+            >
+              <IconFilterDollar size={20} />
+              <span className="text-sm">Set Price Range</span>
+            </Motion.OutlinedButton>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-5 xl:gap-[30px]  mt-5 w-full transition-all duration">
+            {clinics.map(({ id, ...rest }, idx) => (
+              <BlurFade
+                key={`blur-fade-${id}`}
+                delay={0.25 + idx * 0.05}
+                inView
+              >
+                <ClinicCard
+                  id={id}
+                  {...rest}
+                  key={`clinic-card-${id}`}
+                  href={`clinic/${kebabCase(rest.name)}-${kebabCase(rest.location)}-${id}`}
+                />
+              </BlurFade>
+            ))}
+          </div>
+        </div>
+      </main>
 
       <QueryFormDialog open={openLocationBox} setOpen={setOpenLocationBox} />
 

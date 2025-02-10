@@ -2,10 +2,11 @@
 
 import { nanoid } from "nanoid";
 import { routes } from "@/constants";
-import { useLocationStore, Location } from "@/store/location";
+import { useLocationStore } from "@/store/location";
 import { useQuery } from "@tanstack/react-query";
+import { Store } from "@/models";
 
-const fetchCountries = async (): Promise<Location[]> => {
+const fetchCountries = async (): Promise<Store.Location[]> => {
   const headers = new Headers();
   headers.append("X-CSCAPI-KEY", process.env.NEXT_PUBLIC_CSC_API_KEY || "");
 
@@ -33,7 +34,7 @@ const useSpoolCountries = () => {
   const { setCountries, getCountries } = useLocationStore();
   const existingCountries = getCountries();
 
-  return useQuery<Location[]>({
+  return useQuery<Store.Location[]>({
     queryKey: ["countries"],
     queryFn: async () => {
       const newCountries = await fetchCountries();

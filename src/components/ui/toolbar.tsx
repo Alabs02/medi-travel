@@ -18,6 +18,8 @@ const Toolbar = () => {
       setScrolled(window.scrollY > 10);
     };
 
+    handleScroll();
+
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);

@@ -2,10 +2,11 @@
 
 import { nanoid } from "nanoid";
 import { routes } from "@/constants/api.routes";
-import { useLocationStore, Location } from "@/store/location";
+import { useLocationStore } from "@/store/location";
 import { useQuery } from "@tanstack/react-query";
+import { Store } from "@/models";
 
-const fetchStates = async (): Promise<Location[]> => {
+const fetchStates = async (): Promise<Store.Location[]> => {
   const headers = new Headers();
   headers.append("X-CSCAPI-KEY", process.env.NEXT_PUBLIC_CSC_API_KEY || "");
 
@@ -20,7 +21,7 @@ const fetchStates = async (): Promise<Location[]> => {
     throw new Error("Failed to fetch states");
   }
 
-  const result = await response.json();
+  const result: Store.Location[] = await response.json();
   return result.map((r: any) => ({
     id: nanoid(),
     value: r.name,
@@ -34,7 +35,7 @@ const useSpoolStates = () => {
   const { setStates, getStates } = useLocationStore();
   const existingStates = getStates();
 
-  return useQuery<Location[]>({
+  return useQuery<Store.Location[]>({
     queryKey: ["states"],
     queryFn: async () => {
       if (existingStates.length > 0) {

@@ -47,7 +47,7 @@ summary {
 
 *::-webkit-scrollbar-thumb {
   cursor: grab !important;
-  background-color: hsl(var(--primary) / 0.20);
+  background-color: hsl(var(--primary) / 0.2);
   border-radius: 10px;
 }
 
@@ -55,7 +55,7 @@ summary {
 @supports (-moz-appearance: none) {
   * {
     scrollbar-width: thin;
-    scrollbar-color: hsl(var(--primary) / 0.20) transparent;
+    scrollbar-color: hsl(var(--primary) / 0.2) transparent;
   }
 }
 
@@ -172,7 +172,7 @@ summary {
   }
 
   .section {
-    @apply py-6 lg:py-12 xl:py-16 2xl:py-24;
+    @apply py-6 lg:py-12 xl:py-16 2xl:py-28;
   }
 }
 
@@ -194,4 +194,38 @@ input[type="number"] {
 .group\/link:hover::before,
 .group\/link:hover span {
   transition-duration: 0.4s;
+}
+
+.thumb {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  outline: none;
+  position: relative;
+  cursor: grab;
+  transform: translateY(-4px);
+  background: hsl(var(--accent-foreground));
+  box-shadow: 0 0 0 1px hsl(var(--accent) / 0.5);
+
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+  animation-duration: 300ms !important;
+}
+
+.thumb-active {
+  &:hover {
+    scale: 1.1;
+  }
+}
+
+.track {
+  height: 8px;
+  border-radius: 4px;
+  background: hsl(var(--accent)/ 0.35);
+
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+  animation-duration: 300ms !important;
 }
