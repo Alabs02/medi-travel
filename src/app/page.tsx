@@ -171,7 +171,7 @@ const Home = () => {
                 text="Affordable Prices"
                 gradient="bg-gradient-to-b from-destructive to-accent transition-all duration-500"
                 className="font-plus-sans font-extrabold text-3xl lg:text-4xl 2xl:text-5xl !leading-[1.2] text-pretty whitespace-nowrap transition-all duration-300"
-              />{" "}
+              />
             </div>
           </h4>
 

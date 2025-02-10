@@ -7,7 +7,6 @@ import { useMediaQuery, useSpoolCountries, useSpoolStates } from "@/hooks";
 import { Button } from "@/components/ui/button";
 
 import {
-  Input,
   Label,
   Dialog,
   DialogContent,
@@ -24,9 +23,7 @@ import {
   DrawerTrigger,
   DialogFooter,
   Motion,
-  ScrollArea,
-  Separator,
-  Slider
+  ScrollArea
 } from "@/components/ui";
 
 import {

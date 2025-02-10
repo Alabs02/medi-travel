@@ -11,7 +11,10 @@ import { usePathname } from "next/navigation";
 const MotionLink = motion.create(NextLink);
 
 const Button = React.forwardRef<HTMLButtonElement, UI.MotionButtonProps>(
-  ({ className, variant = "accent", children, disabled, onClick, ...rest }, ref) => (
+  (
+    { className, variant = "accent", children, disabled, onClick, ...rest },
+    ref
+  ) => (
     <motion.button
       ref={ref}
       {...whileTapOptions}
@@ -42,8 +45,14 @@ const Button = React.forwardRef<HTMLButtonElement, UI.MotionButtonProps>(
   )
 );
 
-const OutlinedButton = React.forwardRef<HTMLButtonElement, UI.MotionButtonProps>(
-  ({ className, variant = "accent", children, disabled, onClick, ...rest }, ref) => (
+const OutlinedButton = React.forwardRef<
+  HTMLButtonElement,
+  UI.MotionButtonProps
+>(
+  (
+    { className, variant = "accent", children, disabled, onClick, ...rest },
+    ref
+  ) => (
     <motion.button
       ref={ref}
       {...whileTapOptions}
@@ -75,7 +84,10 @@ const OutlinedButton = React.forwardRef<HTMLButtonElement, UI.MotionButtonProps>
 );
 
 const GhostButton = React.forwardRef<HTMLButtonElement, UI.MotionButtonProps>(
-  ({ className, variant = "accent", children, disabled, onClick, ...rest }, ref) => (
+  (
+    { className, variant = "accent", children, disabled, onClick, ...rest },
+    ref
+  ) => (
     <motion.button
       ref={ref}
       {...whileTapOptions}
@@ -94,39 +106,58 @@ const GhostButton = React.forwardRef<HTMLButtonElement, UI.MotionButtonProps>(
   )
 );
 
-const Link = React.forwardRef<HTMLAnchorElement, UI.MotionLinkProps>(
-  ({ href, label, className, prefix, suffix }, ref) => {
-    const pathname = usePathname();
-    const isActive = pathname === href;
+const Link = React.forwardRef<
+  HTMLAnchorElement,
+  UI.MotionLinkProps & { size?: "lg" | "base" | "sm" | "xs" }
+>(({ href, label, className, size = "base", prefix, suffix }, ref) => {
+  const pathname = usePathname();
+  const isActive = pathname === href;
 
-    return (
-      <MotionLink
-        passHref
-        ref={ref}
-        href={href}
-        aria-label={label}
-        data-label={label}
+  const sizeClassName = () => {
+    switch (size) {
+      case "lg":
+        return "!text-lg";
+      case "base":
+        return "!text-base";
+      case "sm":
+        return "!text-sm";
+      case "xs":
+        return "!text-xs";
+      default:
+        return "!text-base";
+    }
+  };
+
+  return (
+    <MotionLink
+      passHref
+      ref={ref}
+      href={href}
+      aria-label={label}
+      data-label={label}
+      className={cn(
+        `group/link relative inline-flex items-center justify-center text-primary/75 text-pretty text-sm md:${sizeClassName()} font-outfit font-medium capitalize tracking-wide no-underline overflow-hidden`,
+        isActive
+          ? "!text-accent"
+          : `before:content-[attr(data-label)] before:absolute before:!text-accent before:-ml-[0.8px] before:font-outfit before:md:${sizeClassName()} before:${sizeClassName()} before:tracking-wide before:font-medium before:top-0 before:left-0 before:translate-y-[140%] hover:before:translate-y-0 transform-gpu`,
+        className
+      )}
+    >
+      {prefix}
+      <span
         className={cn(
-          "group/link relative inline-flex items-center justify-center text-primary/75 text-pretty text-sm md:text-base font-outfit font-medium capitalize tracking-wide no-underline overflow-hidden",
-          isActive ? "!text-accent" : "before:content-[attr(data-label)] before:absolute before:!text-accent before:-ml-[0.8px] before:font-outfit before:md:text-base before:text-base before:tracking-wide before:font-medium before:top-0 before:left-0 before:translate-y-[140%] hover:before:translate-y-0 transform-gpu",
-          className
+          "font-outfit !text-primary/75 text-pretty block",
+          isActive
+            ? "!text-accent"
+            : "group-hover/link:-translate-y-[140%] transform-gpu"
         )}
       >
-        {prefix}
-        <span
-          className={cn(
-            "font-outfit !text-primary/75 text-pretty block",
-            isActive ? "!text-accent" : "group-hover/link:-translate-y-[140%] transform-gpu"
-          )}
-        >
-          {label}
-        </span>
-        {suffix}
-      </MotionLink>
-    );
-  }
-);
-
+        {label}
+      </span>
+      {suffix}
+    </MotionLink>
+  );
+});
 
 const Motion = {
   Link,

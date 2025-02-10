@@ -45,7 +45,7 @@
     "motion": "^12.4.1",
     "nanoid": "^5.0.9",
     "next": "15.1.6",
-    "nextjs-progressbar": "^0.0.16",
+    "next-nprogress-bar": "^2.4.4",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-dropzone": "^14.3.5",

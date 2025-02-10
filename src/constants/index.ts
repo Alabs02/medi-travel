@@ -6,7 +6,8 @@ export const ImagePaths = {
   BBC_LOGO: "/images/bbc.webp",
   WHO_LOGO: "/images/who.webp",
   BLOOMBERG_LOGO: "/images/blloomberg.webp",
-  THE_GUARDIAN_LOGO: "/images/the-guardian.webp"
+  THE_GUARDIAN_LOGO: "/images/the-guardian.webp",
+  MEDI_TRAVEL_HERO: "/images/medi-travel-hero.webp"
 };
 
 export const seo = {
@@ -35,7 +36,7 @@ export const seo = {
       "Find, compare, and book top-rated healthcare providers worldwide with MediTravel. Safe, affordable, and hassle-free medical travel.",
     images: [
       {
-        url: `${BASE_URL}${ImagePaths.BRAND_LOGO}`, // ! Remeber to replace with app screenshot
+        url: `${BASE_URL}${ImagePaths.MEDI_TRAVEL_HERO}`,
         width: 1200,
         height: 630,
         alt: "MediTravel – Seamless Medical Travel & Healthcare Booking"
