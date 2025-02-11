@@ -71,9 +71,7 @@ export default function RootLayout({
           className={`${geistSans.variable} antialiased grid w-full min-h-screen`}
         >
           <RealViewport />
-          <QueryProvider>
-            <PageTransition>{children}</PageTransition>
-          </QueryProvider>
+          <QueryProvider>{children}</QueryProvider>
         </body>
       </ReactLenis>
     </html>

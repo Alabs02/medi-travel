@@ -175,10 +175,10 @@ const Home = () => {
             </div>
           </h4>
 
-          <p className="text-center lg:text-lg 2xl:text-xl text-secondary/75 mt-2.5 w-full lg:max-w-[90%] 2xl:max-w-[80%]">
+          <span className="block text-center lg:text-lg 2xl:text-xl text-secondary/75 mt-2.5 w-full lg:max-w-[90%] 2xl:max-w-[80%]">
             Discover accredited hospitals & clinics that match US standards—at a
             fraction of the cost.
-          </p>
+          </span>
 
           <div className="flex flex-row items-center justify-center mt-2.5 gap-5 w-full flex-wrap overflow-hidden bg-transparent">
             <div className="grid grid-cols-1 min-w-52 max-w-56 my-px ml-px">
