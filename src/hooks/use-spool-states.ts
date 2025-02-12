@@ -13,7 +13,7 @@ const fetchStates = async (): Promise<Store.Location[]> => {
   const requestOptions: RequestInit = {
     method: "GET",
     headers: headers,
-    redirect: "follow",
+    redirect: "follow"
   };
 
   const response = await fetch(routes.external.SPOOL_STATES, requestOptions);
@@ -27,7 +27,7 @@ const fetchStates = async (): Promise<Store.Location[]> => {
     value: r.name,
     iso2: r.iso2,
     latitude: r.latitude,
-    longitude: r.longitude,
+    longitude: r.longitude
   }));
 };
 
@@ -45,7 +45,7 @@ const useSpoolStates = () => {
       setTimeout(() => setStates(newStates), 2000);
       return newStates;
     },
-    staleTime: 1000 * 60 * 5,
+    staleTime: 1000 * 60 * 5
   });
 };
 

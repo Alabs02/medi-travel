@@ -13,7 +13,7 @@ const fetchCountries = async (): Promise<Store.Location[]> => {
   const requestOptions: RequestInit = {
     method: "GET",
     headers: headers,
-    redirect: "follow",
+    redirect: "follow"
   };
 
   const response = await fetch(routes.external.SPOOL_COUNTRIES, requestOptions);
@@ -26,7 +26,7 @@ const fetchCountries = async (): Promise<Store.Location[]> => {
     id: nanoid(),
     value: r.name,
     iso2: r.iso2,
-    iso3: r.iso3,
+    iso3: r.iso3
   }));
 };
 
@@ -38,13 +38,16 @@ const useSpoolCountries = () => {
     queryKey: ["countries"],
     queryFn: async () => {
       const newCountries = await fetchCountries();
-      if (existingCountries.length === 0 || JSON.stringify(existingCountries) !== JSON.stringify(newCountries)) {
+      if (
+        existingCountries.length === 0 ||
+        JSON.stringify(existingCountries) !== JSON.stringify(newCountries)
+      ) {
         setTimeout(() => setCountries(newCountries), 2000);
         return newCountries;
       }
       return existingCountries;
     },
-    staleTime: 1000 * 60 * 5,
+    staleTime: 1000 * 60 * 5
   });
 };
 

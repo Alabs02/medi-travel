@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { PageLayout } from '@/layouts'
+import { PageLayout } from "@/layouts";
 import { Spotlight } from "@/components/ui";
 
 export default function ClinicLayout({ children }: { children: ReactNode }) {
@@ -10,5 +10,5 @@ export default function ClinicLayout({ children }: { children: ReactNode }) {
       </div>
       {children}
     </PageLayout>
-  )
+  );
 }

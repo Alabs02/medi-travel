@@ -32,8 +32,8 @@ const useLocationStore = create<LocationStore>()(
         getAllLocations: () => [
           ...get().cities,
           ...get().states,
-          ...get().countries,
-        ],
+          ...get().countries
+        ]
       }),
       {
         name: "medi-travel/location-cache",

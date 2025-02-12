@@ -8,10 +8,17 @@ const GradientText: React.FC<UI.GradientTextProps> = ({
   className
 }) => {
   return (
-    <span className={cn("inline-block leading-tight tracking-[-0.035em] bg-transparent text-normal", className)}>
+    <span
+      className={cn(
+        "inline-block leading-tight tracking-[-0.035em] bg-transparent text-normal",
+        className
+      )}
+    >
       {text.split("").map((char, index) =>
         char === " " ? (
-          <span key={index} className="inline-block">&nbsp;</span>
+          <span key={index} className="inline-block">
+            &nbsp;
+          </span>
         ) : (
           <span
             key={index}

@@ -60,4 +60,30 @@ export type AuthStoreState = {
   login: (user: User) => void;
   register: (user: User) => void;
   logout: () => void;
-}
+};
+
+export type Clinic = {
+  id: string;
+  name: string;
+  description: string;
+  gallery: string[];
+  location: string;
+  saving: number;
+  rating: number;
+  clinicSlug: string;
+  usEstimatedCost: number;
+  clinicEstimatedCost: number;
+  procedures: Array<{ name: string; amount: string }>;
+  createdBy: {
+    id: string;
+    name: string;
+  };
+  dateCreated: string;
+};
+
+export type ClinicStore = {
+  clinics: Clinic[];
+  getClinics: () => Clinic[];
+  setClinics: (clinics: Clinic[]) => void;
+  resetClinics: () => void;
+};

@@ -1,10 +1,10 @@
 "use client";
 
 import { useDropzone } from "react-dropzone";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 
 import { cn, formatNumber } from "@/lib";
-import { useMediaQuery, useSpoolCountries, useSpoolStates } from "@/hooks";
+import { useMediaQuery } from "@/hooks";
 
 import Image from "next/image";
 
@@ -21,29 +21,32 @@ import {
   DrawerFooter,
   DrawerHeader,
   DrawerTitle,
-  DrawerTrigger,
   DialogFooter,
   Motion,
   Input,
   AnimatedError,
-  Textarea
+  Textarea,
+  Loader,
+  Select,
+  SelectTrigger,
+  SelectContent,
+  SelectItem,
+  SelectValue
 } from "@/components/ui";
 
-import { useQueryStore } from "@/store/query";
 import { IconMinus, IconPlus, IconX } from "@tabler/icons-react";
 import { getAllProcedures } from "@/db";
 import ReactSlider from "react-slider";
 import { motion } from "framer-motion";
 import { clinicFormValidationSchema } from "@/validations";
 import { Field, FieldArray, Form, Formik } from "formik";
-import { size } from "@/_";
+import { size, toString } from "@/_";
+import { useAddClinic } from "@/hooks";
 
 export type AddClinicDialogFormprops = {
   open: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
-
-const MAX_SELECTION = 3;
 
 export type FormValues = {
   name: string;
@@ -60,33 +63,6 @@ const AddClinicDialogForm: React.FC<AddClinicDialogFormprops> = ({
   setOpen
 }) => {
   const isDesktop = useMediaQuery("(min-width: 768px)");
-
-  const initialValues = {
-    name: "",
-    description: "",
-    gallery: [],
-    location: "",
-    usEstimatedCost: "",
-    clinicEstimatedCost: "",
-    procedures: [{ name: "", amount: "" }]
-  };
-
-  const {
-    query,
-    setQuery,
-    resetLocations,
-    resetPriceRanges,
-    resetTreatmentTypes
-  } = useQueryStore();
-
-  const { isFetching: isFetchingStates } = useSpoolStates();
-  const { isFetching: isFetchingCountries } = useSpoolCountries();
-
-  const onReset = () => {
-    resetLocations();
-    resetPriceRanges();
-    resetTreatmentTypes();
-  };
 
   if (isDesktop) {
     return (
@@ -167,7 +143,9 @@ const ClinicForm = ({
   open: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
-  const { getTreatmentTypes } = useQueryStore();
+  const { mutate } = useAddClinic();
+
+  const procedureOptions = useMemo(() => getAllProcedures(), []);
 
   const initialValues = {
     name: "",
@@ -179,18 +157,35 @@ const ClinicForm = ({
     procedures: [{ name: "", amount: "" }]
   };
 
-  const handleSubmit = (values: FormValues) => {
-    console.log("Form Submitted:", values);
-  };
-
   return (
     <>
-      <Formik<FormValues>
+      <Formik<typeof initialValues>
         initialValues={initialValues}
         validationSchema={clinicFormValidationSchema}
-        onSubmit={handleSubmit}
+        onSubmit={(values, { setSubmitting }) => {
+          try {
+            mutate(values, {
+              onSuccess: () => {
+                setOpen(false);
+              }
+            });
+          } catch (error) {
+            console.error({ error });
+          } finally {
+            setTimeout(() => {
+              setSubmitting(false);
+            }, 1500);
+          }
+        }}
       >
-        {({ errors, touched, values, setFieldValue, setFieldTouched }) => (
+        {({
+          errors,
+          touched,
+          values,
+          isSubmitting,
+          setFieldValue,
+          setFieldTouched
+        }) => (
           <Form
             className={cn("grid grid-cols-1 gap-y-4 w-full mb-8", className)}
           >
@@ -203,6 +198,7 @@ const ClinicForm = ({
                 type="text"
                 name="name"
                 as={Input}
+                readOnly={isSubmitting}
                 placeholder="Enter clinic name"
                 errors={errors.name && touched.name}
               />
@@ -221,6 +217,7 @@ const ClinicForm = ({
                 placeholder="Provide a short description of the clinic and its specialties"
                 className="resize-none"
                 maxLength={250}
+                readOnly={isSubmitting}
                 errors={errors.description && touched.description}
               />
               <div className="flex w-full justify-end">
@@ -240,10 +237,10 @@ const ClinicForm = ({
               <MediaUpload
                 name="gallery"
                 id="gallery"
-                required={true}
                 errors={errors}
                 touched={touched}
                 values={values}
+                readOnly={isSubmitting}
                 setFieldValue={setFieldValue}
                 setFieldTouched={setFieldTouched}
               />
@@ -262,7 +259,8 @@ const ClinicForm = ({
                 type="text"
                 name="location"
                 as={Input}
-                placeholder=" Country, City"
+                readOnly={isSubmitting}
+                placeholder="City, Country"
                 errors={errors.location && touched.location}
               />
               <AnimatedError name="location" />
@@ -271,6 +269,7 @@ const ClinicForm = ({
             <PriceRangeInput
               errors={errors}
               values={values}
+              disabled={isSubmitting}
               setFieldValue={setFieldValue}
             />
 
@@ -282,74 +281,126 @@ const ClinicForm = ({
               <FieldArray name="procedures">
                 {({ push, remove }) => (
                   <div className="space-y-2 transition-all duration-300">
-                    {values.procedures.map((procedure, index) => (
-                      <div
-                        key={index}
-                        className="grid grid-cols-1 gap-y-1.5 w-full transition-all duration-300"
-                      >
-                        <div className="flex w-full justify-end gap-x-2">
-                          {size(values.procedures) > 1 && (<Motion.OutlinedButton
-                            type="button"
-                            onClick={() => remove(index)}
-                            variant="destructive"
-                            className="!px-2.5 !py-[5px] !text-destructive !shadow-destructive/50 hover:!shadow-destructive"
-                          >
-                            <IconMinus size={18} />
-                            <span className="font-outfit font-medium text-sm">
-                              Remove
-                            </span>
-                          </Motion.OutlinedButton>)}
+                    {(values.procedures || [{ name: "", amount: "" }]).map(
+                      (procedure, procedureIndex) => (
+                        <div
+                          key={`procedure.panel.${procedureIndex}.${procedure.name}`}
+                          className="grid grid-cols-1 gap-y-1.5 w-full transition-all duration-300"
+                        >
+                          <div className="flex w-full justify-end gap-x-2">
+                            {size(values.procedures) > 1 && (
+                              <Motion.OutlinedButton
+                                type="button"
+                                onClick={(e: any) => {
+                                  e?.preventDefault();
+                                  e?.stopPropagation();
+                                  remove(procedureIndex);
+                                }}
+                                disabled={isSubmitting}
+                                variant="destructive"
+                                className="!px-2.5 !py-[5px] !text-destructive !shadow-destructive/50 hover:!shadow-destructive"
+                              >
+                                <IconMinus size={18} />
+                                <span className="font-outfit font-medium text-sm">
+                                  Remove
+                                </span>
+                              </Motion.OutlinedButton>
+                            )}
 
-                          {index + 1 === size(values.procedures) && (
-                            <Motion.OutlinedButton
-                              type="button"
-                              onClick={() => push({ name: "", amount: "" })}
-                              className="!px-2.5 !py-[5px]"
-                            >
-                              <IconPlus size={18} />
-                              <span className="font-outfit font-medium text-sm">
-                                Add
-                              </span>
-                            </Motion.OutlinedButton>
-                          )}
-                        </div>
-
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
-                          <div className="md:col-span-2 grid grid-cols-1">
-                            <Field
-                              type="text"
-                              name={`procedures.${index}.name`}
-                              as={Input}
-                              placeholder="e.g., Knee Replacement"
-                            />
+                            {procedureIndex + 1 === size(values.procedures) && (
+                              <Motion.OutlinedButton
+                                type="button"
+                                disabled={isSubmitting}
+                                onClick={(e: any) => {
+                                  e?.preventDefault();
+                                  e?.stopPropagation();
+                                  push({ name: "", amount: "" });
+                                }}
+                                className="!px-2.5 !py-[5px]"
+                              >
+                                <IconPlus size={18} />
+                                <span className="font-outfit font-medium text-sm">
+                                  Add
+                                </span>
+                              </Motion.OutlinedButton>
+                            )}
                           </div>
 
-                          <div className="grid grid-cols-1">
-                            <Field
+                          <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
+                            <div className="md:col-span-2 grid grid-cols-1">
+                              <Select
+                                disabled={isSubmitting}
+                                onValueChange={(value) => {
+                                  setFieldValue(
+                                    `procedures.${procedureIndex}.name`,
+                                    toString(value)
+                                  );
+                                }}
+                                defaultValue={procedure.name ?? ""}
+                              >
+                                <SelectTrigger
+                                  onClick={(e) => {
+                                    e?.preventDefault();
+                                    e?.stopPropagation();
+                                  }}
+                                  className="!h-11 border-secondary/25 text-secondary/75"
+                                >
+                                  <SelectValue placeholder="e.g., Knee Replacement" />
+                                </SelectTrigger>
+                                <SelectContent>
+                                  {procedureOptions.map((_procedure) => (
+                                    <SelectItem
+                                      key={_procedure.id}
+                                      value={_procedure.value}
+                                    >
+                                      {_procedure.value}
+                                    </SelectItem>
+                                  ))}
+                                </SelectContent>
+                              </Select>
+                            </div>
+
+                            <Input
                               type="number"
-                              name={`procedures.${index}.amount`}
-                              as={Input}
+                              id={`procedures.${procedureIndex}.amount`}
+                              name={`procedures.${procedureIndex}.amount`}
+                              value={
+                                values.procedures[procedureIndex]?.amount ?? ""
+                              }
+                              onChange={(e) =>
+                                setFieldValue(
+                                  `procedures.${procedureIndex}.amount`,
+                                  toString(e.target.value)
+                                )
+                              }
+                              readOnly={isSubmitting}
                               placeholder="e.g 10000"
                             />
                           </div>
                         </div>
-                      </div>
-                    ))}
+                      )
+                    )}
                   </div>
                 )}
               </FieldArray>
+
               <AnimatedError name="procedures" />
             </div>
 
             <Motion.Button
               type="submit"
+              disabled={isSubmitting}
               variant={
                 Object.keys(errors).length > 0 ? "destructive" : "accent"
               }
               className="bg-gradient-to-br from-primary via-primary to-secondary/75 mt-4"
             >
               <div className="flex-1 flex items-center justify-center space-x-2.5">
-                <span>Add Clinic to MediTravel</span>
+                {isSubmitting && <Loader />}
+                <span>
+                  {isSubmitting ? "Submitting..." : "Add Clinic to MediTravel"}
+                </span>
+                <span></span>
               </div>
             </Motion.Button>
           </Form>
@@ -361,9 +412,10 @@ const ClinicForm = ({
 
 const PriceRangeInput: React.FC<{
   errors: any;
+  disabled?: boolean;
   values: FormValues;
   setFieldValue: any;
-}> = ({ errors, values, setFieldValue }) => {
+}> = ({ errors, values, disabled = false, setFieldValue }) => {
   const handlePriceChange = (value: [number, number]) => {
     setFieldValue("clinicEstimatedCost", value[0]);
     setFieldValue("usEstimatedCost", value[1]);
@@ -389,6 +441,7 @@ const PriceRangeInput: React.FC<{
           max={50000}
           step={500}
           pearling
+          disabled={disabled}
           minDistance={5000}
           renderThumb={({ key, ...rest }, state) => (
             <div {...rest} key={key} className="thumb">
@@ -441,11 +494,11 @@ const PriceRangeInput: React.FC<{
 
 const MediaUpload = (props: any) => {
   const {
-    required,
     name,
     errors,
     touched,
     values,
+    readOnly,
     setFieldValue,
     setFieldTouched
   } = props;
@@ -501,7 +554,7 @@ const MediaUpload = (props: any) => {
       <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 mb-4 transition-all duration-300 will-change-auto">
         {previews.map((preview, index) => (
           <div
-            key={index}
+            key={`preview-${index}`}
             className="relative w-full h-32 bg-muted rounded-md overflow-hidden transition-all duration-300 will-change-auto"
           >
             <Image
@@ -514,6 +567,7 @@ const MediaUpload = (props: any) => {
             />
             <motion.button
               type="button"
+              disabled={readOnly}
               onClick={() => handleRemove(index)}
               className="absolute top-1.5 right-1.5 size-7 grid place-items-center p-px border-none outline-none focus:outline-none rounded-full text-sm text-destructive hover:underline shadow-[0_0_0_1px] shadow-destructive/25 hover:shadow-destructive/10 bg-destructive-foreground backdrop-filter"
             >
@@ -539,7 +593,7 @@ const MediaUpload = (props: any) => {
           <input
             type="file"
             name={name}
-            required={required}
+            readOnly={readOnly}
             style={{ opacity: 0 }}
             ref={hiddenInputRef}
           />
@@ -579,4 +633,4 @@ const Dots: React.FC<{ className?: string }> = ({ className }) => {
 ClinicForm.displayName = "ClinicForm";
 AddClinicDialogForm.displayName = "AddClinicDialogForm";
 
-export { AddClinicDialogForm, ClinicForm };
+export { AddClinicDialogForm };

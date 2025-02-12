@@ -46,7 +46,8 @@ const Textarea = React.forwardRef<
       <textarea
         className={cn(
           "flex min-h-[60px] w-full rounded-md border border-transparent hover:border-accent/20 focus:border-accent/15 px-3 py-2 text-base shadow-sm disabled:cursor-not-allowed disabled:opacity-50 md:text-sm text-secondary/75 placeholder:text-secondary/60 bg-muted hover:bg-background focus:bg-background focus-visible:ring-2 focus-visible:ring-accent/50 focus-visible:ring-offset-1 focus-visible:ring-offset-background focus-visible:outline-none focus-visible:outline-0 transition-all duration-400",
-          errors && "hover:border-destructive/20 focus:border-destructive/15 focus-visible:ring-destructive/50",
+          errors &&
+            "hover:border-destructive/20 focus:border-destructive/15 focus-visible:ring-destructive/50",
           className
         )}
         ref={ref}

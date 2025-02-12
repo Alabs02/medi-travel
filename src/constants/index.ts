@@ -7,7 +7,8 @@ export const ImagePaths = {
   WHO_LOGO: "/images/who.webp",
   BLOOMBERG_LOGO: "/images/blloomberg.webp",
   THE_GUARDIAN_LOGO: "/images/the-guardian.webp",
-  MEDI_TRAVEL_HERO: "/images/medi-travel-hero.webp"
+  MEDI_TRAVEL_HERO: "/images/medi-travel-hero.webp",
+  EMPTY_STATE: "/images/empty-state.svg"
 };
 
 export const seo = {
@@ -67,14 +68,14 @@ export const globalMediaFeatures = [
   ImagePaths.BLOOMBERG_LOGO,
   ImagePaths.BBC_LOGO,
   ImagePaths.WHO_LOGO,
-  ImagePaths.THE_GUARDIAN_LOGO,
+  ImagePaths.THE_GUARDIAN_LOGO
 ];
 
 export const heroVideo = {
   videoSrc: "https://youtu.be/D9yPeZip_h4?si=zkTaQV7itn_7cnFn",
   thumbnailSrc: ImagePaths.HERO_THUMBNAIL,
   thumbnailAlt: "Hero Video | MediTravel"
-}
+};
 
 export const whileTapOptions = {
   whileTap: { scale: 0.9 },

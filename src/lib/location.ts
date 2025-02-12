@@ -1,4 +1,8 @@
-export const getNearbyLocations = async (latitude: number, longitude: number, limit = 10) => {
+export const getNearbyLocations = async (
+  latitude: number,
+  longitude: number,
+  limit = 10
+) => {
   try {
     const response = await fetch(
       `https://api.example.com/nearby?lat=${latitude}&lng=${longitude}&limit=${limit}`

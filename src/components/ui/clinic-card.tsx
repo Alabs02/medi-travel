@@ -17,25 +17,22 @@ import {
 import { Motion } from "./motion-button";
 import { BadgeDollarSign } from "lucide-react";
 
-const MotionLink = motion.create(Link);
-
 const ClinicCard: React.FC<UI.ClinicCardProps> = (props) => {
   const {
-    src,
+    gallery,
     name,
     location,
     saving,
     rating,
-    tagline,
-    estimateCost,
-    usAverageCost,
+    procedures,
+    clinicEstimatedCost,
+    usEstimatedCost,
     href,
     className
   } = props;
 
   return (
-    <MotionLink
-      href={href}
+    <motion.div
       aria-label={name}
       title={name}
       className={cn("w-full flex flex-col gap-y-2.5", className)}
@@ -43,7 +40,7 @@ const ClinicCard: React.FC<UI.ClinicCardProps> = (props) => {
       <div className="w-full h-52 grid grid-cols-1 rounded-md relative overflow-hidden">
         <Image
           priority
-          src={src}
+          src={gallery[0]}
           alt={name}
           width={500}
           height={500}
@@ -54,7 +51,7 @@ const ClinicCard: React.FC<UI.ClinicCardProps> = (props) => {
         <div className="flex items-start justify-between w-full absolute top-0 p-2.5 rounded-md z-10">
           <p className="cursor-default flex items-center bg-accent-foreground/85 backdrop-filter font-outfit capitalize tracking-wide font-medium text-primary/75 px-2.5 py-0.5 rounded-full text-[15px]">
             <BadgeDollarSign size={18} className="mr-1" />
-            {`Est. Cost: ${formatNumber(estimateCost, { currency: "USD", decimals: 0 })}`}
+            {`Est. Cost: ${formatNumber(clinicEstimatedCost, { currency: "USD", decimals: 0 })}`}
           </p>
 
           <IconHeart
@@ -92,7 +89,7 @@ const ClinicCard: React.FC<UI.ClinicCardProps> = (props) => {
         <ReactMarkdown
           className={"!font-geist-sans text-[15px] text-secondary/75"}
         >
-          {getSavingsCopy(estimateCost, usAverageCost)}
+          {getSavingsCopy(clinicEstimatedCost, usEstimatedCost)}
         </ReactMarkdown>
 
         <TooltipProvider>
@@ -122,11 +119,13 @@ const ClinicCard: React.FC<UI.ClinicCardProps> = (props) => {
       </div>
 
       <div className="flex items-center gap-5 w-full mt-2.5">
-        <Motion.OutlinedButton className="flex-1 !justify-center !px-1">
-          <span className="font-outfit flex-1 text-center text-sm font-normal tracking-[0.01em]">
-            View Details
-          </span>
-        </Motion.OutlinedButton>
+        <Link href={href} className="flex-1 grid grid-cols-1" passHref>
+          <Motion.OutlinedButton className="!justify-center !px-1">
+            <span className="font-outfit flex-1 text-center text-sm font-normal tracking-[0.01em]">
+              View Details
+            </span>
+          </Motion.OutlinedButton>
+        </Link>
 
         <Motion.Button className="flex-1 !justify-center !px-1">
           <span className="font-outfit flex-1 text-center text-sm font-normal tracking-[0.01em]">
@@ -134,7 +133,7 @@ const ClinicCard: React.FC<UI.ClinicCardProps> = (props) => {
           </span>
         </Motion.Button>
       </div>
-    </MotionLink>
+    </motion.div>
   );
 };
 

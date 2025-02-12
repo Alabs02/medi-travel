@@ -25,7 +25,7 @@ const QueryProvider: React.FC<{ children: React.ReactNode }> = ({
           z-index: 999 !important;
         }
       `}</style>
-      
+
       <Toaster />
 
       <PageTransition>{children}</PageTransition>

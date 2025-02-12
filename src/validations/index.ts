@@ -60,8 +60,8 @@ export const clinicFormValidationSchema = Yup.object().shape({
         name: Yup.string().required("Procedure name is required"),
         amount: Yup.number()
           .required("Procedure cost is required")
-          .min(0, "Cost cannot be negative"),
+          .min(0, "Cost cannot be negative")
       })
     )
-    .min(1, "At least one procedure is required"),
+    .min(1, "At least one procedure is required")
 });

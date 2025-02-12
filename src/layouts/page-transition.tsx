@@ -21,7 +21,9 @@ const pageVariants = {
   }
 };
 
-const PageTransition: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+const PageTransition: React.FC<{ children: React.ReactNode }> = ({
+  children
+}) => {
   const pathname = usePathname();
   const [displayChildren, setDisplayChildren] = useState(children);
   const [pathKey, setPathKey] = useState(nanoid(10));

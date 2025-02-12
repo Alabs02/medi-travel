@@ -1,17 +1,17 @@
-import { clsx, type ClassValue } from "clsx"
-import { twMerge } from "tailwind-merge"
+import { clsx, type ClassValue } from "clsx";
+import { twMerge } from "tailwind-merge";
 
 export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs))
+  return twMerge(clsx(inputs));
 }
 
 export function isDevMode() {
-  return process.env.NODE_ENV === 'development';
+  return process.env.NODE_ENV === "development";
 }
 
 export const getSavingsCopy = (
-  estimateCost: number, 
-  usAverageCost: number, 
+  estimateCost: number,
+  usAverageCost: number,
   format: "short" | "long" = "short"
 ): string => {
   const saving = usAverageCost - estimateCost;
@@ -51,7 +51,7 @@ export function formatNumber(
   if (compact) {
     return new Intl.NumberFormat("en-US", {
       notation: "compact",
-      maximumFractionDigits: decimals,
+      maximumFractionDigits: decimals
     }).format(num);
   }
 
@@ -60,13 +60,36 @@ export function formatNumber(
       style: "currency",
       currency,
       minimumFractionDigits: decimals,
-      maximumFractionDigits: decimals,
+      maximumFractionDigits: decimals
     }).format(num);
   }
 
   return new Intl.NumberFormat("en-US", {
     minimumFractionDigits: decimals,
-    maximumFractionDigits: decimals,
+    maximumFractionDigits: decimals
   }).format(num);
 }
 
+export const generateAvatarUrl = (
+  name: string,
+  size = 100,
+  background = "random",
+  color = "fff"
+) => {
+  return `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&size=${size}&background=${background}&color=${color}`;
+};
+
+export const getInitials = (name: string): string => {
+  if (!name || typeof name !== "string") {
+    return "";
+  }
+
+  const nameParts = name.trim().split(/\s+/);
+  const firstInitial = nameParts[0] ? nameParts[0][0].toUpperCase() : "";
+  const lastInitial =
+    nameParts.length > 1
+      ? nameParts[nameParts.length - 1][0].toUpperCase()
+      : "";
+
+  return `${firstInitial}${lastInitial}`;
+};

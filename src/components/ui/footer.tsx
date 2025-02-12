@@ -42,11 +42,14 @@ const Footer = () => {
             <TitleTag className="font-plus-sans font-bold text-xl text-primary-foreground brightness-125 tracking-[0.015em]">
               MediTravel
             </TitleTag>
-            <span className="font-geist-sans font-light text-sm 2xl:text-sm text-primary-foreground/55 hidden 2xl:inline-block transition-all duration-200">Your Trusted Partner in Transformation</span>
+            <span className="font-geist-sans font-light text-sm 2xl:text-sm text-primary-foreground/55 hidden 2xl:inline-block transition-all duration-200">
+              Your Trusted Partner in Transformation
+            </span>
           </div>
         </Link>
-        <span className="font-geist-sans font-light text-xs 2xl:text-sm text-primary-foreground/55 block 2xl:hidden transition-all duration-200">Your Trusted Partner in Transformation</span>
-
+        <span className="font-geist-sans font-light text-xs 2xl:text-sm text-primary-foreground/55 block 2xl:hidden transition-all duration-200">
+          Your Trusted Partner in Transformation
+        </span>
 
         <div className="flex items-center space-x-2.5 xl:space-x-5 mt-5">
           <IconBrandInstagram

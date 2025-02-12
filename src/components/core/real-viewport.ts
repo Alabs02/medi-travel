@@ -1,37 +1,37 @@
-'use client'
+"use client";
 
-import { useCallback, useLayoutEffect } from 'react'
+import { useCallback, useLayoutEffect } from "react";
 
 const RealViewport = () => {
   const onWindowResize = useCallback(() => {
     document.documentElement.style.setProperty(
-      '--vw',
+      "--vw",
       `${document.documentElement.clientWidth * 0.01}px`
-    )
+    );
 
     document.documentElement.style.setProperty(
-      '--dvh',
+      "--dvh",
       `${window.innerHeight * 0.01}px`
-    )
+    );
 
     document.documentElement.style.setProperty(
-      '--svh',
+      "--svh",
       `${document.documentElement.clientHeight * 0.01}px`
-    )
+    );
 
-    document.documentElement.style.setProperty('--lvh', '1vh')
-  }, [])
+    document.documentElement.style.setProperty("--lvh", "1vh");
+  }, []);
 
   useLayoutEffect(() => {
-    window.addEventListener('resize', onWindowResize, false)
-    onWindowResize()
+    window.addEventListener("resize", onWindowResize, false);
+    onWindowResize();
 
     return () => {
-      window.removeEventListener('resize', onWindowResize, false)
-    }
-  }, [onWindowResize])
+      window.removeEventListener("resize", onWindowResize, false);
+    };
+  }, [onWindowResize]);
 
-  return null
-}
+  return null;
+};
 
 export { RealViewport };

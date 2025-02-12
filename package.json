@@ -5,9 +5,11 @@
   "author": "usmanunfolds@alabura.com",
   "scripts": {
     "dev": "next dev -p 8050",
+    "dev:clean": "pnpm clear-cache && pnpm dev",
     "build": "next build",
     "start": "next start -p 8050",
     "lint": "next lint",
+    "clear-cache": "rimraf .next .cache",
     "format": "prettier --write \"**/*.{ts,tsx,scss,mdx,md}\""
   },
   "dependencies": {
@@ -16,6 +18,7 @@
     "@fontsource/plus-jakarta-sans": "^5.1.1",
     "@radix-ui/react-checkbox": "^1.1.4",
     "@radix-ui/react-dialog": "^1.1.6",
+    "@radix-ui/react-dropdown-menu": "^2.1.6",
     "@radix-ui/react-label": "^2.1.2",
     "@radix-ui/react-popover": "^1.1.6",
     "@radix-ui/react-portal": "^1.1.4",
@@ -46,6 +49,7 @@
     "motion": "^12.4.1",
     "nanoid": "^5.0.9",
     "next": "15.1.6",
+    "next-cloudinary": "^6.16.0",
     "next-nprogress-bar": "^2.4.4",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
@@ -73,6 +77,7 @@
     "autoprefixer": "^10.4.20",
     "postcss": "^8",
     "prettier": "^3.4.2",
+    "rimraf": "^6.0.1",
     "tailwindcss": "^3.4.1",
     "tailwindcss-animate": "^1.0.7",
     "typescript": "^5"

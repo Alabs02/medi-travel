@@ -12,10 +12,10 @@ const useAuthStore = create<Store.AuthStoreState>()(
 
         getUser: () => get().user,
         getIsAuthenticated: () => get().isAuthenticated,
-    
+
         login: (user) => set({ user, isAuthenticated: true }),
         logout: () => set({ user: null, isAuthenticated: false }),
-        register: (user) => set({ user, isAuthenticated: true }),
+        register: (user) => set({ user, isAuthenticated: true })
       }),
       {
         name: "medi-travel/auth-store",

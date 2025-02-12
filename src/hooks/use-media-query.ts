@@ -5,7 +5,8 @@ const useMediaQuery = (query: string): boolean => {
 
   useEffect(() => {
     const mediaQueryList = window.matchMedia(query);
-    const documentChangeHandler = (event: MediaQueryListEvent) => setMatches(event.matches);
+    const documentChangeHandler = (event: MediaQueryListEvent) =>
+      setMatches(event.matches);
 
     setMatches(mediaQueryList.matches);
 
@@ -17,6 +18,6 @@ const useMediaQuery = (query: string): boolean => {
   }, [query]);
 
   return matches;
-}
+};
 
 export { useMediaQuery };

@@ -5,7 +5,7 @@ import {
   motion,
   useInView,
   UseInViewOptions,
-  Variants,
+  Variants
 } from "motion/react";
 import { useRef } from "react";
 
@@ -37,7 +37,7 @@ export function BlurFade({
   direction = "down",
   inView = false,
   inViewMargin = "-50px",
-  blur = "6px",
+  blur = "6px"
 }: BlurFadeProps) {
   const ref = useRef(null);
   const inViewResult = useInView(ref, { once: true, margin: inViewMargin });
@@ -47,13 +47,13 @@ export function BlurFade({
       [direction === "left" || direction === "right" ? "x" : "y"]:
         direction === "right" || direction === "down" ? -offset : offset,
       opacity: 0,
-      filter: `blur(${blur})`,
+      filter: `blur(${blur})`
     },
     visible: {
       [direction === "left" || direction === "right" ? "x" : "y"]: 0,
       opacity: 1,
-      filter: `blur(0px)`,
-    },
+      filter: `blur(0px)`
+    }
   };
   const combinedVariants = variant || defaultVariants;
   return (
@@ -67,7 +67,7 @@ export function BlurFade({
         transition={{
           delay: 0.04 + delay,
           duration,
-          ease: "easeOut",
+          ease: "easeOut"
         }}
         className={className}
       >

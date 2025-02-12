@@ -52,7 +52,10 @@ const Login = () => {
             if (response?.email) router.push("/");
           } catch (error: any) {
             console.log({ error });
-            setErrors({ email: "Invalid credentials", password: "Invalid credentials" });
+            setErrors({
+              email: "Invalid credentials",
+              password: "Invalid credentials"
+            });
           } finally {
             setSubmitting(false);
           }
@@ -139,9 +142,9 @@ const Login = () => {
               className="bg-gradient-to-br from-primary via-primary to-secondary/75 mt-2.5"
             >
               <div className="flex-1 flex items-center justify-center space-x-2.5">
-                {isSubmitting && (<Loader />)}
+                {isSubmitting && <Loader />}
                 <span>{isSubmitting ? "Hang in tight..." : "Sign In"}</span>
-                {!isSubmitting && (<IconArrowNarrowRight />)}
+                {!isSubmitting && <IconArrowNarrowRight />}
               </div>
             </Motion.Button>
           </Form>

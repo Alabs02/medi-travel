@@ -1,4 +1,5 @@
 import { MotionProps } from "framer-motion";
+import { Store } from ".";
 
 export type MotionButtonProps = MotionProps & {
   onClick?: any;
@@ -23,17 +24,8 @@ export type GradientTextProps = {
   className?: string;
 };
 
-export type ClinicCardProps = {
-  id: string,
-  src: string;
-  name: string;
+export type ClinicCardProps = Store.Clinic & {
   href: string;
-  saving: number;
-  rating: number;
-  tagline: string;
-  location: string;
-  estimateCost: number;
-  usAverageCost: number;
   className?: string;
 };
 

@@ -7,12 +7,14 @@ import {
   HeroVideoDialog,
   ClinicCard,
   BlurFade,
-  Spotlight
+  Spotlight,
+  EmptyState
 } from "@/components/ui";
 import {
   IconAdjustmentsSpark,
   IconFilterDollar,
-  IconListSearch
+  IconListSearch,
+  IconX
 } from "@tabler/icons-react";
 import { globalMediaFeatures, heroVideo } from "@/constants";
 import { PageLayout } from "@/layouts";
@@ -25,24 +27,57 @@ import {
   TreatmentDropdown
 } from "@/components/forms";
 import { useQueryStore } from "@/store/query";
-import { debounce, kebabCase } from "@/_";
+import { debounce, isEmpty } from "@/_";
 import Image from "next/image";
-import { clinics } from "@/db";
 import { Hospital } from "lucide-react";
+import { toast, useCheckAuth, useClinics } from "@/hooks";
+import { ClinicCardSkeleton } from "@/components/skeletons";
+import { useRouter } from "next/navigation";
 
 const Home = () => {
+  const router = useRouter();
   const [openLocationBox, setOpenLocationBox] = useState(false);
   const [openAddClinicDialog, setOpenAddClinicDialog] = useState(false);
 
-  const { query, setQuery } = useQueryStore();
+  const { data: authState } = useCheckAuth();
+  const { query, setQuery, getLocations, getTreatmentTypes, resetStore } =
+    useQueryStore();
+  const { data: clinics, isFetching: isFetchingClinics } = useClinics();
+
+  const hasFilterParams = () => {
+    return (
+      !isEmpty(query) || !isEmpty(getLocations()) || !isEmpty(getTreatmentTypes)
+    );
+  };
+
+  const onResetFilterParams = () => {
+    resetStore();
+  };
+
+  console.log({ authState });
 
   const debouncedSearch = useCallback(
     debounce((value: string) => {
       setQuery(value);
-      console.log("Search query:", value);
     }, 50),
     []
   );
+
+  const onAddClinic = () => {
+    if (isEmpty(authState)) {
+      toast({
+        title: "Hold Up! 🚀",
+        description:
+          "Sign up or log in to add a clinic and help others find affordable care."
+      });
+
+      setTimeout(() => {
+        router.push("/auth/login");
+      }, 100);
+    } else {
+      setOpenAddClinicDialog(true);
+    }
+  };
 
   const onSearchQuery = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
@@ -206,36 +241,72 @@ const Home = () => {
             <Motion.OutlinedButton
               className="h-10 my-px"
               type="button"
-              onClick={() => setOpenAddClinicDialog(true)}
+              onClick={onAddClinic}
             >
               <Hospital size={20} />
               <span className="font-outfit text-sm">Add a New Clinic</span>
             </Motion.OutlinedButton>
+
+            {hasFilterParams() && (
+              <Motion.GhostButton
+                className="my-px !px-3 !py-1.5"
+                type="button"
+                onClick={onResetFilterParams}
+              >
+                <span className="font-outfit text-xs">Reset</span>
+                <IconX size={15} />
+              </Motion.GhostButton>
+            )}
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-5 xl:gap-[30px]  mt-5 w-full transition-all duration">
-            {clinics.map(({ id, ...rest }, idx) => (
-              <BlurFade
-                key={`blur-fade-${id}`}
-                delay={0.25 + idx * 0.05}
-                inView
-              >
-                <ClinicCard
-                  id={id}
-                  {...rest}
-                  key={`clinic-card-${id}`}
-                  href={`clinic/${kebabCase(rest.name)}-${kebabCase(rest.location)}-${id}`}
-                />
-              </BlurFade>
-            ))}
-          </div>
+          {isEmpty(clinics) && !isFetchingClinics ? (
+            <EmptyState className="mt-5" onClick={onAddClinic} />
+          ) : null}
+
+          {isFetchingClinics && (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-5 xl:gap-[30px]  mt-5 w-full transition-all duration">
+              {Array(8)
+                .fill(0)
+                .map((_, idx) => (
+                  <BlurFade
+                    key={`blur-fade-skeleton-${idx}`}
+                    delay={0.15 + idx * 0.05}
+                    inView
+                  >
+                    <ClinicCardSkeleton />
+                  </BlurFade>
+                ))}
+            </div>
+          )}
+
+          {!isEmpty(clinics) && !isFetchingClinics ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-5 xl:gap-[30px]  mt-5 w-full transition-all duration">
+              {(clinics || []).map(({ clinicSlug, ...rest }, idx) => (
+                <BlurFade
+                  key={`blur-fade-${clinicSlug}`}
+                  delay={0.25 + idx * 0.05}
+                  inView
+                >
+                  <ClinicCard
+                    {...rest}
+                    clinicSlug={clinicSlug}
+                    key={`clinic-card-${clinicSlug}`}
+                    href={`clinic/${clinicSlug}`}
+                  />
+                </BlurFade>
+              ))}
+            </div>
+          ) : null}
         </div>
 
         <Spotlight />
       </main>
 
       <QueryFormDialog open={openLocationBox} setOpen={setOpenLocationBox} />
-      <AddClinicDialogForm open={openAddClinicDialog} setOpen={setOpenAddClinicDialog} />
+      <AddClinicDialogForm
+        open={openAddClinicDialog}
+        setOpen={setOpenAddClinicDialog}
+      />
       <HeroDots />
     </PageLayout>
   );

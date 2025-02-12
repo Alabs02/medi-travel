@@ -28,43 +28,43 @@ const animationVariants = {
   "from-bottom": {
     initial: { y: "100%", opacity: 0 },
     animate: { y: 0, opacity: 1 },
-    exit: { y: "100%", opacity: 0 },
+    exit: { y: "100%", opacity: 0 }
   },
   "from-center": {
     initial: { scale: 0.5, opacity: 0 },
     animate: { scale: 1, opacity: 1 },
-    exit: { scale: 0.5, opacity: 0 },
+    exit: { scale: 0.5, opacity: 0 }
   },
   "from-top": {
     initial: { y: "-100%", opacity: 0 },
     animate: { y: 0, opacity: 1 },
-    exit: { y: "-100%", opacity: 0 },
+    exit: { y: "-100%", opacity: 0 }
   },
   "from-left": {
     initial: { x: "-100%", opacity: 0 },
     animate: { x: 0, opacity: 1 },
-    exit: { x: "-100%", opacity: 0 },
+    exit: { x: "-100%", opacity: 0 }
   },
   "from-right": {
     initial: { x: "100%", opacity: 0 },
     animate: { x: 0, opacity: 1 },
-    exit: { x: "100%", opacity: 0 },
+    exit: { x: "100%", opacity: 0 }
   },
   fade: {
     initial: { opacity: 0 },
     animate: { opacity: 1 },
-    exit: { opacity: 0 },
+    exit: { opacity: 0 }
   },
   "top-in-bottom-out": {
     initial: { y: "-100%", opacity: 0 },
     animate: { y: 0, opacity: 1 },
-    exit: { y: "100%", opacity: 0 },
+    exit: { y: "100%", opacity: 0 }
   },
   "left-in-right-out": {
     initial: { x: "-100%", opacity: 0 },
     animate: { x: 0, opacity: 1 },
-    exit: { x: "100%", opacity: 0 },
-  },
+    exit: { x: "100%", opacity: 0 }
+  }
 };
 
 function HeroVideoDialog({
@@ -72,7 +72,7 @@ function HeroVideoDialog({
   videoSrc,
   thumbnailSrc,
   thumbnailAlt = "Video thumbnail",
-  className,
+  className
 }: HeroVideoProps) {
   const [isVideoOpen, setIsVideoOpen] = useState(false);
   const selectedAnimation = animationVariants[animationStyle];
@@ -99,7 +99,7 @@ function HeroVideoDialog({
                 className="size-8 scale-100 fill-white text-white transition-transform duration-200 ease-out group-hover:scale-105"
                 style={{
                   filter:
-                    "drop-shadow(0 4px 3px rgb(0 0 0 / 0.07)) drop-shadow(0 2px 2px rgb(0 0 0 / 0.06))",
+                    "drop-shadow(0 4px 3px rgb(0 0 0 / 0.07)) drop-shadow(0 2px 2px rgb(0 0 0 / 0.06))"
                 }}
               />
             </div>

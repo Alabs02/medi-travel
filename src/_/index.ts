@@ -17,6 +17,7 @@ import isEqual from "lodash/isEqual";
 import shuffle from "lodash/shuffle";
 import size from "lodash/size";
 import sortBy from "lodash/sortBy";
+import toString from "lodash/toString";
 
 export {
   debounce,
@@ -38,4 +39,5 @@ export {
   shuffle,
   size,
   sortBy,
+  toString
 };
