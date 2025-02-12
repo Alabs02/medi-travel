@@ -1,7 +1,14 @@
 import { BASE_URL } from "@/app/sitemap";
 
 export const ImagePaths = {
-  BRAND_LOGO: "/images/medi-travel-logo.webp"
+  BRAND_LOGO: "/images/medi-travel-logo.webp",
+  HERO_THUMBNAIL: "/images/hero-video-thumbnail.webp",
+  BBC_LOGO: "/images/bbc.webp",
+  WHO_LOGO: "/images/who.webp",
+  BLOOMBERG_LOGO: "/images/blloomberg.webp",
+  THE_GUARDIAN_LOGO: "/images/the-guardian.webp",
+  MEDI_TRAVEL_HERO: "/images/medi-travel-hero.webp",
+  EMPTY_STATE: "/images/empty-state.svg"
 };
 
 export const seo = {
@@ -30,7 +37,7 @@ export const seo = {
       "Find, compare, and book top-rated healthcare providers worldwide with MediTravel. Safe, affordable, and hassle-free medical travel.",
     images: [
       {
-        url: `${BASE_URL}${ImagePaths.BRAND_LOGO}`, // ! Remeber to replace with app screenshot
+        url: `${BASE_URL}${ImagePaths.MEDI_TRAVEL_HERO}`,
         width: 1200,
         height: 630,
         alt: "MediTravel – Seamless Medical Travel & Healthcare Booking"
@@ -57,6 +64,19 @@ export const seo = {
   }
 };
 
+export const globalMediaFeatures = [
+  ImagePaths.BLOOMBERG_LOGO,
+  ImagePaths.BBC_LOGO,
+  ImagePaths.WHO_LOGO,
+  ImagePaths.THE_GUARDIAN_LOGO
+];
+
+export const heroVideo = {
+  videoSrc: "https://youtu.be/Zup7cT2HZHk?si=97H-IehuoS5Xknmp",
+  thumbnailSrc: ImagePaths.HERO_THUMBNAIL,
+  thumbnailAlt: "Hero Video | MediTravel"
+};
+
 export const whileTapOptions = {
   whileTap: { scale: 0.9 },
   initial: { scale: 1 },
@@ -71,3 +91,5 @@ export const whileTapOptions = {
     duration: 0.03
   }
 };
+
+export * from "./api.routes";
