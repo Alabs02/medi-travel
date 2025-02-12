@@ -18,8 +18,8 @@ import { IconArrowNarrowRight, IconEye, IconEyeOff } from "@tabler/icons-react";
 import { useRouter } from "next/navigation";
 import { useLogin } from "@/hooks";
 
-export const MotionIconEye = motion.create(IconEye);
-export const MotionIconEyeOff = motion.create(IconEyeOff);
+const MotionIconEye = motion.create(IconEye);
+const MotionIconEyeOff = motion.create(IconEyeOff);
 
 const Login = () => {
   const router = useRouter();
