@@ -9,11 +9,12 @@ const nextConfig: NextConfig = withBundleAnalyzer({
   reactStrictMode: false,
   images: {
     domains: [
+      "youtu.be",
       "images.unsplash.com",
       "source.unsplash.com",
       "plus.unsplash.com",
       "res.cloudinary.com",
-      "ui-avatars.com"
+      "ui-avatars.com",
     ],
     remotePatterns: [
       {
@@ -47,6 +48,20 @@ const nextConfig: NextConfig = withBundleAnalyzer({
       {
         protocol: "https",
         hostname: "ui-avatars.com",
+        port: "",
+        pathname: "/**",
+        search: ""
+      },
+      {
+        protocol: "https",
+        hostname: "youtu.be",
+        port: "",
+        pathname: "/**",
+        search: ""
+      },
+      {
+        protocol: "https",
+        hostname: "youtube.com",
         port: "",
         pathname: "/**",
         search: ""
