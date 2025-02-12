@@ -11,24 +11,23 @@ import {
   GradientText,
   Input,
   Label,
+  Loader,
   Motion
 } from "@/components/ui";
 import { IconArrowNarrowRight, IconEye, IconEyeOff } from "@tabler/icons-react";
 import { useRouter } from "next/navigation";
+import { useLogin } from "@/hooks";
 
 export const MotionIconEye = motion.create(IconEye);
 export const MotionIconEyeOff = motion.create(IconEyeOff);
 
 const Login = () => {
-  const [mask, setMask] = useState(true);
   const router = useRouter();
+  const [mask, setMask] = useState(true);
+  const { mutateAsync } = useLogin();
 
   const toggleMask = () => {
     setMask((prevMask) => !prevMask);
-  };
-
-  const goToHomePage = () => {
-    router.push("/"); // Use router.push for navigation
   };
 
   return (
@@ -47,12 +46,19 @@ const Login = () => {
       <Formik
         initialValues={{ email: "", password: "" }}
         validationSchema={loginValidationSchema}
-        onSubmit={(values) => {
-          console.log("Form Submitted:", values);
-          goToHomePage();
+        onSubmit={async (values, { setSubmitting, setErrors }) => {
+          try {
+            const response = await mutateAsync(values);
+            if (response?.email) router.push("/");
+          } catch (error: any) {
+            console.log({ error });
+            setErrors({ email: "Invalid credentials", password: "Invalid credentials" });
+          } finally {
+            setSubmitting(false);
+          }
         }}
       >
-        {({ errors, touched }) => (
+        {({ errors, touched, isSubmitting }) => (
           <Form className="grid grid-cols-1 gap-y-2.5 w-full mt-7">
             <div className="grid grid-cols-1 gap-y-0.5">
               <Label
@@ -66,6 +72,7 @@ const Login = () => {
                 type="email"
                 name="email"
                 as={Input}
+                readOnly={isSubmitting}
                 placeholder="Enter your email"
                 errors={errors.email && touched.email}
               />
@@ -85,6 +92,7 @@ const Login = () => {
                 <Field
                   name="password"
                   as={Input}
+                  readOnly={isSubmitting}
                   type={mask ? "password" : "text"}
                   placeholder="Enter your password"
                   errors={errors.password && touched.password}
@@ -127,11 +135,13 @@ const Login = () => {
               variant={
                 errors.email || errors.password ? "destructive" : "accent"
               }
+              disabled={isSubmitting}
               className="bg-gradient-to-br from-primary via-primary to-secondary/75 mt-2.5"
             >
               <div className="flex-1 flex items-center justify-center space-x-2.5">
-                <span>Sign In</span>
-                <IconArrowNarrowRight />
+                {isSubmitting && (<Loader />)}
+                <span>{isSubmitting ? "Hang in tight..." : "Sign In"}</span>
+                {!isSubmitting && (<IconArrowNarrowRight />)}
               </div>
             </Motion.Button>
           </Form>

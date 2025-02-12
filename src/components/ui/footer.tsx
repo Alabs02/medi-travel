@@ -22,7 +22,7 @@ const Footer = () => {
   const TitleTag = isHome ? "h6" : "span";
 
   return (
-    <motion.div className="bg-primary w-full min-h-72 shadow-sm grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 relative">
+    <motion.div className="bg-primary w-full min-h-72 shadow-sm grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 relative !mt-auto !justify-self-end">
       <div className="w-full h-full relative z-20 bg-gradient-to-b from-primary-foreground/10 via-primary-foreground/5 to-transparent backdrop-filter px-5 py-[30px] 2xl:px-[30px] flex flex-col gap-y-[15px] 2xl:col-span-2">
         <Link href={"/"} className="flex space-x-2.5 items-center" passHref>
           <div className="size-12 relative overflow-hidden">

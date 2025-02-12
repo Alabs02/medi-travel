@@ -5,6 +5,7 @@ import { AppProgressBar as ProgressBar } from "next-nprogress-bar";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { PageTransition } from "@/layouts";
+import { Toaster } from "../ui/toaster";
 
 const QueryProvider: React.FC<{ children: React.ReactNode }> = ({
   children
@@ -24,6 +25,8 @@ const QueryProvider: React.FC<{ children: React.ReactNode }> = ({
           z-index: 999 !important;
         }
       `}</style>
+      
+      <Toaster />
 
       <PageTransition>{children}</PageTransition>
       <ReactQueryDevtools initialIsOpen={false} />

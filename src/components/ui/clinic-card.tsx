@@ -53,8 +53,8 @@ const ClinicCard: React.FC<UI.ClinicCardProps> = (props) => {
         />
         <div className="flex items-start justify-between w-full absolute top-0 p-2.5 rounded-md z-10">
           <p className="cursor-default flex items-center bg-accent-foreground/85 backdrop-filter font-outfit capitalize tracking-wide font-medium text-primary/75 px-2.5 py-0.5 rounded-full text-[15px]">
-          <BadgeDollarSign size={18} className="mr-1" />
-          {`Est. Cost: ${formatNumber(estimateCost, { currency: "USD", decimals: 0 })}`}
+            <BadgeDollarSign size={18} className="mr-1" />
+            {`Est. Cost: ${formatNumber(estimateCost, { currency: "USD", decimals: 0 })}`}
           </p>
 
           <IconHeart
@@ -89,11 +89,11 @@ const ClinicCard: React.FC<UI.ClinicCardProps> = (props) => {
       </div>
 
       <div className="flex items-center space-x-2.5">
-        <p className="!font-geist-sans text-[15px] text-secondary/75">
-          <ReactMarkdown>
-            {getSavingsCopy(estimateCost, usAverageCost)}
-          </ReactMarkdown>
-        </p>
+        <ReactMarkdown
+          className={"!font-geist-sans text-[15px] text-secondary/75"}
+        >
+          {getSavingsCopy(estimateCost, usAverageCost)}
+        </ReactMarkdown>
 
         <TooltipProvider>
           <Tooltip>
@@ -109,7 +109,7 @@ const ClinicCard: React.FC<UI.ClinicCardProps> = (props) => {
               </motion.div>
             </TooltipTrigger>
             <TooltipContent>
-              <p className="!text-background font-outfit text-sm">{`You'll Save ${formatNumber(usAverageCost, { currency: "USD", decimals: 0 })}`}</p>
+              <span className="!text-background font-outfit text-sm">{`You'll Save ${formatNumber(saving, { currency: "USD", decimals: 0 })}`}</span>
             </TooltipContent>
           </Tooltip>
         </TooltipProvider>
@@ -123,11 +123,15 @@ const ClinicCard: React.FC<UI.ClinicCardProps> = (props) => {
 
       <div className="flex items-center gap-5 w-full mt-2.5">
         <Motion.OutlinedButton className="flex-1 !justify-center !px-1">
-          <span className="font-outfit flex-1 text-center text-sm font-normal tracking-[0.01em]">View Details</span>
+          <span className="font-outfit flex-1 text-center text-sm font-normal tracking-[0.01em]">
+            View Details
+          </span>
         </Motion.OutlinedButton>
 
         <Motion.Button className="flex-1 !justify-center !px-1">
-          <span className="font-outfit flex-1 text-center text-sm font-normal tracking-[0.01em]">Check Availability</span>
+          <span className="font-outfit flex-1 text-center text-sm font-normal tracking-[0.01em]">
+            Check Availability
+          </span>
         </Motion.Button>
       </div>
     </MotionLink>

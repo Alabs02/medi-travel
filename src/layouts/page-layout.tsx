@@ -6,13 +6,13 @@ import { motion } from "framer-motion";
 
 const PageLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   return (
-    <React.Fragment>
-      <motion.section className="flex flex-col w-full h-full">
+    <motion.section className="min-h-screen w-full grid grid-cols-1">
+      <div className="flex flex-col w-full h-full">
         <Toolbar />
-        {children}
+        <div className="flex-1 overflow-y-auto overflow-x-hidden">{children}</div>
         <Footer />
-      </motion.section>
-    </React.Fragment>
+      </div>
+    </motion.section>
   );
 };
 

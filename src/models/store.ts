@@ -1,3 +1,5 @@
+import { User } from "firebase/auth";
+
 export type Location = {
   id: string;
   value: string;
@@ -47,3 +49,15 @@ export type QueryStore = {
   resetTreatmentTypes: () => void;
   resetStore: () => void;
 };
+
+export type AuthStoreState = {
+  user: User | null;
+  isAuthenticated: boolean;
+
+  getUser: () => User | null;
+  getIsAuthenticated: () => boolean;
+
+  login: (user: User) => void;
+  register: (user: User) => void;
+  logout: () => void;
+}

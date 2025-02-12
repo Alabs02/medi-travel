@@ -25,7 +25,7 @@ export const getSavingsCopy = (
     } else if (percentage >= 30) {
       return `Affordable excellence! Get top-rated medical services at **${percentage}% lower** cost compared to the U.S.`;
     } else {
-      return `Premium healthcare at a fraction of U.S. prices—without compromising on safety or quality.`;
+      return `Premium healthcare at a fraction of U.S. prices, without compromising on safety or quality.`;
     }
   }
 

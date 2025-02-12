@@ -6,38 +6,38 @@ import { motion, AnimatePresence } from "framer-motion";
 import { nanoid } from "nanoid";
 
 const pageVariants = {
-  initial: { opacity: 0, x: 60, scale: 0.98 },
+  initial: { opacity: 0, x: 30, scale: 0.98 },
   animate: {
     opacity: 1,
     x: 0,
     scale: 1,
-    transition: { type: "spring", stiffness: 120, damping: 20 }
+    transition: { type: "spring", stiffness: 180, damping: 20, delay: 0.03 }
   },
   exit: {
     opacity: 0,
-    x: -60,
+    x: -30,
     scale: 0.98,
-    transition: { duration: 0.4, ease: "easeInOut" }
+    transition: { duration: 0.25, ease: "easeInOut" }
   }
 };
 
-const PageTransition: React.FC<{ children: React.ReactNode }> = ({
-  children
-}) => {
+const PageTransition: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const pathname = usePathname();
   const [displayChildren, setDisplayChildren] = useState(children);
   const [pathKey, setPathKey] = useState(nanoid(10));
   const [isTransitioning, setIsTransitioning] = useState(false);
 
   useEffect(() => {
-    if (pathname) {
-      setIsTransitioning(true);
-      setTimeout(() => {
-        setPathKey(nanoid(10));
-        setDisplayChildren(children);
-        setIsTransitioning(false);
-      }, 400);
-    }
+    if (!pathname) return;
+
+    setIsTransitioning(true);
+    const timeout = setTimeout(() => {
+      setPathKey(nanoid(10));
+      setDisplayChildren(children);
+      setIsTransitioning(false);
+    }, 150);
+
+    return () => clearTimeout(timeout);
   }, [pathname, children]);
 
   return (

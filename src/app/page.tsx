@@ -6,7 +6,8 @@ import {
   Motion,
   HeroVideoDialog,
   ClinicCard,
-  BlurFade
+  BlurFade,
+  Spotlight
 } from "@/components/ui";
 import {
   IconAdjustmentsSpark,
@@ -18,6 +19,7 @@ import { PageLayout } from "@/layouts";
 import { useCallback, useState } from "react";
 import { motion } from "framer-motion";
 import {
+  AddClinicDialogForm,
   LocationDropdown,
   QueryFormDialog,
   TreatmentDropdown
@@ -26,9 +28,12 @@ import { useQueryStore } from "@/store/query";
 import { debounce, kebabCase } from "@/_";
 import Image from "next/image";
 import { clinics } from "@/db";
+import { Hospital } from "lucide-react";
 
 const Home = () => {
   const [openLocationBox, setOpenLocationBox] = useState(false);
+  const [openAddClinicDialog, setOpenAddClinicDialog] = useState(false);
+
   const { query, setQuery } = useQueryStore();
 
   const debouncedSearch = useCallback(
@@ -88,7 +93,7 @@ const Home = () => {
                   value={query}
                   onChange={onSearchQuery}
                   placeholder="Search treatments or specialists..."
-                  className="h-full w-full 2xl:!text-base pl-10 pr-20"
+                  className="h-full w-full 2xl:!text-base pl-10 pr-20 !min-h-12"
                 />
 
                 <div className="absolute top-1/2 -translate-y-1/2 right-3">
@@ -156,7 +161,7 @@ const Home = () => {
         </div>
       </header>
 
-      <main className="w-full flex justify-center realtive z-10">
+      <main className="relative w-full flex justify-center realtive z-10">
         <div className="container section h-full flex flex-col gap-y-5 items-center">
           <h4
             className="text-center"
@@ -176,7 +181,7 @@ const Home = () => {
           </h4>
 
           <span className="block text-center lg:text-lg 2xl:text-xl text-secondary/75 mt-2.5 w-full lg:max-w-[90%] 2xl:max-w-[80%]">
-            Discover accredited hospitals & clinics that match US standards—at a
+            Discover accredited hospitals & clinics that match US standards at a
             fraction of the cost.
           </span>
 
@@ -195,7 +200,16 @@ const Home = () => {
               onClick={() => setOpenLocationBox(true)}
             >
               <IconFilterDollar size={20} />
-              <span className="text-sm">Set Price Range</span>
+              <span className="font-outfit text-sm">Set Price Range</span>
+            </Motion.OutlinedButton>
+
+            <Motion.OutlinedButton
+              className="h-10 my-px"
+              type="button"
+              onClick={() => setOpenAddClinicDialog(true)}
+            >
+              <Hospital size={20} />
+              <span className="font-outfit text-sm">Add a New Clinic</span>
             </Motion.OutlinedButton>
           </div>
 
@@ -216,10 +230,12 @@ const Home = () => {
             ))}
           </div>
         </div>
+
+        <Spotlight />
       </main>
 
       <QueryFormDialog open={openLocationBox} setOpen={setOpenLocationBox} />
-
+      <AddClinicDialogForm open={openAddClinicDialog} setOpen={setOpenAddClinicDialog} />
       <HeroDots />
     </PageLayout>
   );
