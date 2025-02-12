@@ -6,7 +6,7 @@ const withBundleAnalyzer = require("@next/bundle-analyzer")({
 
 const nextConfig: NextConfig = withBundleAnalyzer({
   output: "standalone",
-  reactStrictMode: true,
+  reactStrictMode: false,
   images: {
     domains: [
       "images.unsplash.com",

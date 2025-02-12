@@ -168,7 +168,7 @@ const Home = () => {
             </div>
           </div>
 
-          <div className="col-span-12 lg:col-span-5 flex flex-col gap-y-5">
+          <div className="col-span-12 lg:col-span-5 lg:flex flex-col gap-y-5 hidden">
             <HeroVideoPreview />
 
             <h3 className="text-xl font-bold text-primary/75 2xl:mt-5">

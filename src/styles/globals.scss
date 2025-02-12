@@ -51,6 +51,11 @@ summary {
   border-radius: 10px;
 }
 
+.inner-layout::-webkit-scrollbar-track,
+.inner-layout::-webkit-scrollbar {
+  display: none;
+}
+
 /* Firefox */
 @supports (-moz-appearance: none) {
   * {

@@ -72,7 +72,7 @@ export const globalMediaFeatures = [
 ];
 
 export const heroVideo = {
-  videoSrc: "https://youtu.be/D9yPeZip_h4?si=zkTaQV7itn_7cnFn",
+  videoSrc: "https://youtu.be/Zup7cT2HZHk?si=97H-IehuoS5Xknmp",
   thumbnailSrc: ImagePaths.HERO_THUMBNAIL,
   thumbnailAlt: "Hero Video | MediTravel"
 };
