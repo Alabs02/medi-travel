@@ -1,36 +1,133 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# MediTravel
 
-## Getting Started
+![MediTravel Logo](https://meditravel.vercel.app/images/medi-travel-logo.webp)
 
-First, run the development server:
+Your trusted partner in medical tourism. MediTravel connects patients with world-class clinics, ensuring affordable and high-quality healthcare worldwide.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## 🌍 Live Application
+Experience MediTravel live: [MediTravel App](https://meditravel.vercel.app/)
+
+![MediTravel Hero](https://meditravel.vercel.app/images/medi-travel-hero.webp)
+
+---
+
+## 🚀 About the Project
+MediTravel is a **Next.js** application designed to streamline medical tourism by helping users find, compare, and book procedures in top-tier international clinics. It features:
+- **Seamless Authentication** powered by Firebase Auth
+- **Clinic Listings & Comparisons** with real-time pricing insights
+- **High-Performance UI/UX** leveraging Radix UI and Tailwind CSS
+- **Secure Image & Data Handling** via Cloudinary and Firestore
+- **Optimized for SEO & Performance** using Next.js App Router
+
+## 📂 Project Structure
+```
+medi-travel/
+ ├── src/
+ │   ├── app/ (Next.js App Router)
+ │   ├── components/ (UI components)
+ │   ├── constants/ (Global constants)
+ │   ├── db/ (Database config - Firebase & Firestore)
+ │   ├── hooks/ (Custom React hooks)
+ │   ├── layouts/ (Page layouts)
+ │   ├── lib/ (Utility functions)
+ │   ├── models/ (Data models)
+ │   ├── store/ (Zustand global state management)
+ │   ├── styles/ (TailwindCSS & global styles)
+ │   ├── validations/ (Yup validation schemas)
+ ├── next.config.ts (Next.js configuration)
+ ├── package.json (Dependencies & scripts)
+ ├── tailwind.config.ts (Tailwind CSS config)
+ ├── tsconfig.json (TypeScript configuration)
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 📦 Key Technologies & Libraries
+### Core Stack
+- **Next.js 15** - Framework for React with App Router
+- **TypeScript** - Ensures type safety
+- **Firebase** (Auth, Firestore) - Secure authentication and data storage
+- **Cloudinary** - Optimized image storage and delivery
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### UI/UX Enhancements
+- **TailwindCSS** - Utility-first styling
+- **Radix UI** - Accessible and customizable UI components
+- **Framer Motion** - Smooth animations & micro-interactions
+- **Lucide & Tabler Icons** - Crisp and modern icons
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### State Management & Data Handling
+- **Zustand** - Lightweight state management
+- **TanStack React Query** - Powerful data fetching & caching
+- **Lodash** - Functional utilities
 
-## Learn More
+### Performance & Security
+- **Next Image Optimization** - For fast and responsive images
+- **Next Cloudinary** - Seamless Cloudinary integration
+- **Next Bundle Analyzer** - Optimized build analysis
 
-To learn more about Next.js, take a look at the following resources:
+## 🔧 Setup & Installation
+### Prerequisites
+- Node.js (>= 18.x)
+- pnpm (preferred) / npm / yarn
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Clone Repository
+```sh
+git clone https://github.com/yourusername/medi-travel.git
+cd medi-travel
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Install Dependencies
+Using **pnpm** (recommended):
+```sh
+pnpm install
+```
+Using **npm**:
+```sh
+npm install
+```
+Using **yarn**:
+```sh
+yarn install
+```
 
-## Deploy on Vercel
+### Environment Variables
+Create a `.env.local` file and configure the following:
+```env
+NEXT_PUBLIC_CSC_API_KEY=value
+NEXT_PUBLIC_FIREBASE_APP_ID=value
+NEXT_PUBLIC_FIREBASE_API_KEY=value
+NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=value
+NEXT_PUBLIC_FIREBASE_PROJECT_ID=value
+NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=value
+NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=value
+NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID=value
+NEXT_PUBLIC_UPLOAD_PRESET=value
+NEXT_PUBLIC_CLOUDINARY_ENV=value
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Run Development Server
+```sh
+pnpm dev
+# OR
+npm run dev
+# OR
+yarn dev
+```
+App will be running at `http://localhost:8050`
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 📌 Notable Configurations
+### `next.config.ts`
+- **Bundle Analysis** enabled for production builds
+- **Strict Security Headers** including `Content-Security-Policy`, `Referrer-Policy`, `HSTS`
+- **Optimized Image Domains** (Cloudinary, Unsplash, UI-Avatars)
+- **Experimental Turbo Mode** for enhanced performance
+
+## 📜 License
+MIT License. See `LICENSE` for details.
+
+## ✨ Contributors
+- **Alabura Usman** ([@usmanunfolds](mailto:usmanunfolds@alabura.com))
+
+## 📮 Feedback & Support
+If you encounter any issues or have suggestions, feel free to open an issue or reach out via email: [usmanunfolds@alabura.com](mailto:usmanunfolds@alabura.com).
+
+🚀 *Transforming medical tourism, one click at a time!*
+
