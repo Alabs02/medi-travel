@@ -1,5 +1,4 @@
 import { isDevMode } from "@/lib";
-import { useClinics } from "@/hooks";
 
 export const BASE_URL =
   process.env.NEXT_PUBLIC_SITE_URL ||
@@ -13,22 +12,22 @@ export default async function sitemap() {
     priority: 0.8
   }));
 
-  const clinicSlugs = await getClinicSlugs();
+  // const clinicSlugs = await getClinicSlugs();
 
-  const clinicRoutes = clinicSlugs.map((slug) => ({
-    url: `${BASE_URL}/clinic/${slug}`,
-    lastModified: new Date().toISOString().split("T")[0],
-    changefreq: "daily",
-    priority: 0.9
-  }));
+  // const clinicRoutes = clinicSlugs.map((slug) => ({
+  //   url: `${BASE_URL}/clinic/${slug}`,
+  //   lastModified: new Date().toISOString().split("T")[0],
+  //   changefreq: "daily",
+  //   priority: 0.9
+  // }));
 
-  return [...staticRoutes, ...clinicRoutes];
+  return [...staticRoutes];
 }
 
-async function getClinicSlugs() {
-  const { data: clinics } = await useClinics().refetch();
+// async function getClinicSlugs() {
+//   const { data: clinics } = await useClinics().refetch();
 
-  if (!clinics) return [];
+//   if (!clinics) return [];
 
-  return clinics.map((clinic) => clinic?.clinicSlug);
-}
+//   return clinics.map((clinic) => clinic?.clinicSlug);
+// }
