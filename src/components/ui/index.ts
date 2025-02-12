@@ -14,7 +14,7 @@ export * from "./separator";
 export * from "./scroll-area";
 export * from "./toolbar";
 export * from "./footer";
-export * from "./loader";
+export * from "./tailwind-loader";
 export * from "./popover";
 export * from "./command";
 export * from "./particles";
