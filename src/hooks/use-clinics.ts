@@ -1,3 +1,5 @@
+"use client";
+
 import { nanoid } from "nanoid";
 import { db } from "@/firebase";
 import { useClinicStore } from "@/store/clinic";

@@ -3,8 +3,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 
 import { cn } from "@/lib";
-import { useMediaQuery, useSpoolCountries, useSpoolStates } from "@/hooks";
-import { Button } from "@/components/ui/button";
+import { useMediaQuery } from "@/hooks";
 
 import {
   Label,
@@ -14,13 +13,11 @@ import {
   DialogHeader,
   DialogTitle,
   Drawer,
-  DrawerClose,
   DrawerContent,
   DrawerDescription,
   DrawerFooter,
   DrawerHeader,
   DrawerTitle,
-  DrawerTrigger,
   DialogFooter,
   Motion,
   ScrollArea
@@ -67,15 +64,10 @@ const MAX_SELECTION = 3;
 const QueryFormDialog: React.FC<QueryFormDialogprops> = ({ open, setOpen }) => {
   const isDesktop = useMediaQuery("(min-width: 768px)");
   const {
-    query,
-    setQuery,
     resetLocations,
     resetPriceRanges,
     resetTreatmentTypes
   } = useQueryStore();
-
-  const { isFetching: isFetchingStates } = useSpoolStates();
-  const { isFetching: isFetchingCountries } = useSpoolCountries();
 
   const onReset = () => {
     resetLocations();
@@ -121,21 +113,28 @@ const QueryFormDialog: React.FC<QueryFormDialogprops> = ({ open, setOpen }) => {
 
   return (
     <Drawer open={open} onOpenChange={setOpen}>
-      <DrawerTrigger asChild>
-        <Button variant="outline">Edit Profile</Button>
-      </DrawerTrigger>
       <DrawerContent>
-        <DrawerHeader className="text-center">
-          <DrawerTitle>Edit profile</DrawerTitle>
-          <DrawerDescription>
-            Make changes to your profile here. Click save when you're done.
-          </DrawerDescription>
+        <DrawerHeader className="rounded-t-lg p-5 bg-background/50 backdrop-blur-sm backdrop-filter sticky border-b border-hairline/15 !h-14">
+          <DrawerTitle className="font-font-plus-sans tracking-wide text-left !text-base text-primary/85">
+            Filters
+          </DrawerTitle>
+          <DrawerDescription className="hidden"></DrawerDescription>
         </DrawerHeader>
+
         <QueryForm className="px-4" />
-        <DrawerFooter className="p-5">
-          <DrawerClose asChild>
-            <Button variant="outline">Cancel</Button>
-          </DrawerClose>
+
+        <DrawerFooter className="flex items-center lg:!justify-between !p-5 rounded-b-lg bg-background backdrop-blur-sm backdrop-filter border-t border-hairline/15 sticky bottom-0 z-40 !h-14">
+          <Motion.GhostButton
+            type="button"
+            onClick={onReset}
+            className="!py-2 !px-4"
+          >
+            <span className="font-outfit text-normal !text-sm">Clear all</span>
+          </Motion.GhostButton>
+
+          <Motion.Button onClick={() => setOpen(!open)} className="!py-2 !px-4">
+            <span className="font-outfit !text-sm">Apply</span>
+          </Motion.Button>
         </DrawerFooter>
       </DrawerContent>
     </Drawer>
