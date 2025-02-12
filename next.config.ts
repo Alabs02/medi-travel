@@ -111,7 +111,7 @@ const nextConfig: NextConfig = withBundleAnalyzer({
               {
                 key: "Content-Security-Policy",
                 value:
-                  "default-src 'self' https: data: blob: 'unsafe-inline' 'unsafe-eval'; img-src 'self' data:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https:; style-src 'self' 'unsafe-inline' https:"
+                  "default-src 'self' https: data: blob: 'unsafe-inline' 'unsafe-eval'; img-src *; script-src 'self' 'unsafe-inline' 'unsafe-eval' https:; style-src 'self' 'unsafe-inline' https:"
               }
             ]
           }
