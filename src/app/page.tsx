@@ -18,7 +18,7 @@ import {
 } from "@tabler/icons-react";
 import { globalMediaFeatures, heroVideo } from "@/constants";
 import { PageLayout } from "@/layouts";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import {
   AddClinicDialogForm,
@@ -30,31 +30,28 @@ import { useQueryStore } from "@/store/query";
 import { debounce, isEmpty } from "@/_";
 import Image from "next/image";
 import { Hospital } from "lucide-react";
-import { toast, useCheckAuth, useClinics } from "@/hooks";
+import { toast, useCheckAuth, useClinics, useSpoolCountries, useSpoolStates } from "@/hooks";
 import { ClinicCardSkeleton } from "@/components/skeletons";
 import { useRouter } from "next/navigation";
 
 const Home = () => {
+  useSpoolCountries();
+  useSpoolStates();
+
   const router = useRouter();
   const [openLocationBox, setOpenLocationBox] = useState(false);
   const [openAddClinicDialog, setOpenAddClinicDialog] = useState(false);
+  const [hasFilterParams, setHasFilterParams] = useState(false);
 
   const { data: authState } = useCheckAuth();
-  const { query, setQuery, getLocations, getTreatmentTypes, resetStore } =
+  const { query, setQuery, locations, getLocations, treatmentTypes, getTreatmentTypes, resetStore } =
     useQueryStore();
   const { data: clinics, isFetching: isFetchingClinics } = useClinics();
-
-  const hasFilterParams = () => {
-    return (
-      !isEmpty(query) || !isEmpty(getLocations()) || !isEmpty(getTreatmentTypes)
-    );
-  };
 
   const onResetFilterParams = () => {
     resetStore();
   };
 
-  console.log({ authState });
 
   const debouncedSearch = useCallback(
     debounce((value: string) => {
@@ -83,6 +80,12 @@ const Home = () => {
     const value = e.target.value;
     debouncedSearch(value);
   };
+
+  useEffect(() => {
+    setHasFilterParams(
+      !isEmpty(query) || !isEmpty(getLocations()) || !isEmpty(getTreatmentTypes)
+    );
+  }, [query, locations, treatmentTypes]);
 
   return (
     <PageLayout>
@@ -247,7 +250,7 @@ const Home = () => {
               <span className="font-outfit text-sm">Add a New Clinic</span>
             </Motion.OutlinedButton>
 
-            {hasFilterParams() && (
+            {hasFilterParams && (
               <Motion.GhostButton
                 className="my-px !px-3 !py-1.5"
                 type="button"
