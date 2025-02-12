@@ -98,21 +98,21 @@ const nextConfig: NextConfig = withBundleAnalyzer({
               },
               { key: "X-Content-Type-Options", value: "nosniff" },
               { key: "X-Frame-Options", value: "SAMEORIGIN" },
-              {
-                key: "Strict-Transport-Security",
-                value: "max-age=31536000; includeSubDomains; preload"
-              },
+              // {
+              //   key: "Strict-Transport-Security",
+              //   value: "max-age=31536000; includeSubDomains; preload"
+              // },
               { key: "X-XSS-Protection", value: "1; mode=block" },
               { key: "Referrer-Policy", value: "strict-origin" },
               {
                 key: "Permissions-Policy",
                 value: "geolocation=(), microphone=(), camera=()"
               },
-              {
-                key: "Content-Security-Policy",
-                value:
-                  "default-src 'self' https: data: blob: 'unsafe-inline' 'unsafe-eval'; img-src *; script-src 'self' 'unsafe-inline' 'unsafe-eval' https:; style-src 'self' 'unsafe-inline' https:"
-              }
+              // {
+              //   key: "Content-Security-Policy",
+              //   value:
+              //     "default-src 'self' https: data: blob: 'unsafe-inline' 'unsafe-eval'; img-src *; script-src 'self' 'unsafe-inline' 'unsafe-eval' https:; style-src 'self' 'unsafe-inline' https:"
+              // }
             ]
           }
         ]
