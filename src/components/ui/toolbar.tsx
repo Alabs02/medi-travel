@@ -19,15 +19,15 @@ import {
 } from "@/components/ui";
 import { IconLogout } from "@tabler/icons-react";
 import { useRouter } from "next/navigation";
-import { isEmpty } from "@/_";
+import { useAuthStore } from "@/store/auth";
 
 const Toolbar = () => {
   const router = useRouter();
   const pathname = usePathname();
   const isHome = pathname === "/";
   const TitleTag = isHome ? "h1" : "span";
+  const { getUser, getIsAuthenticated, isAuthenticated } = useAuthStore();
 
-  const { data: authState } = useCheckAuth();
   const { mutateAsync } = useLogout();
 
   const [scrolled, setScrolled] = useState(false);
@@ -46,7 +46,7 @@ const Toolbar = () => {
 
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [isAuthenticated]);
 
   return (
     <nav
@@ -99,7 +99,7 @@ const Toolbar = () => {
             </span>
           </Motion.Button>
 
-          {!isEmpty(authState) ? (
+          {getIsAuthenticated() ? (
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <motion.button
@@ -111,7 +111,7 @@ const Toolbar = () => {
                   transition={{ duration: 0.25, ease: "easeInOut" }}
                   className="size-10 relative border-none rounded-full grid place-items-center bg-accent/20 !text-accent font-outfit font-semibold overflow-hidden shadow-[0_0_0_1px] shadow-accent/25 focus-visible:outline-none"
                 >
-                  <p>{getInitials(authState?.displayName || "")}</p>
+                  <p>{getInitials(getUser()?.displayName || "")}</p>
                 </motion.button>
               </DropdownMenuTrigger>
 
