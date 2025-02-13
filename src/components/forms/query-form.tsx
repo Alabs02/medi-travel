@@ -246,17 +246,16 @@ const LocationDropdown = () => {
 
   const allLocations = getAllLocations();
 
-  useEffect(() => {
-    navigator.geolocation.getCurrentPosition(
-      async ({ coords }) => {
-        console.log({ coords });
-        // const nearby = await getNearbyLocations(coords.latitude, coords.longitude);
-        setNearbyLocations([]);
-      },
-      (error) => console.warn("Geolocation error:", error.message),
-      { enableHighAccuracy: true, timeout: 10000 }
-    );
-  }, []);
+  // useEffect(() => {
+  //   navigator.geolocation.getCurrentPosition(
+  //     async ({ coords }) => {
+  //       console.log({ coords });
+  //       setNearbyLocations([]);
+  //     },
+  //     (error) => console.warn("Geolocation error:", error.message),
+  //     { enableHighAccuracy: true, timeout: 10000 }
+  //   );
+  // }, []);
 
   useEffect(() => {
     if (!open) setSearch("");
