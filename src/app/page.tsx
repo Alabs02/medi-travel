@@ -30,9 +30,15 @@ import { useQueryStore } from "@/store/query";
 import { debounce, isEmpty } from "@/_";
 import Image from "next/image";
 import { Hospital } from "lucide-react";
-import { toast, useCheckAuth, useClinics, useSpoolCountries, useSpoolStates } from "@/hooks";
+import {
+  toast,
+  useClinics,
+  useSpoolCountries,
+  useSpoolStates
+} from "@/hooks";
 import { ClinicCardSkeleton } from "@/components/skeletons";
 import { useRouter } from "next/navigation";
+import { useAuthStore } from "@/store/auth";
 
 const Home = () => {
   useSpoolCountries();
@@ -43,15 +49,22 @@ const Home = () => {
   const [openAddClinicDialog, setOpenAddClinicDialog] = useState(false);
   const [hasFilterParams, setHasFilterParams] = useState(false);
 
-  const { data: authState } = useCheckAuth();
-  const { query, setQuery, locations, getLocations, treatmentTypes, getTreatmentTypes, resetStore } =
-    useQueryStore();
+  const {
+    query,
+    setQuery,
+    locations,
+    getLocations,
+    treatmentTypes,
+    getTreatmentTypes,
+    resetStore
+  } = useQueryStore();
+
+  const { getIsAuthenticated } = useAuthStore();
   const { data: clinics, isFetching: isFetchingClinics } = useClinics();
 
   const onResetFilterParams = () => {
     resetStore();
   };
-
 
   const debouncedSearch = useCallback(
     debounce((value: string) => {
@@ -61,7 +74,9 @@ const Home = () => {
   );
 
   const onAddClinic = () => {
-    if (isEmpty(authState)) {
+    if (getIsAuthenticated()) {
+      setOpenAddClinicDialog(true);
+    } else {
       toast({
         title: "Hold Up! 🚀",
         description:
@@ -71,8 +86,6 @@ const Home = () => {
       setTimeout(() => {
         router.push("/auth/login");
       }, 100);
-    } else {
-      setOpenAddClinicDialog(true);
     }
   };
 
