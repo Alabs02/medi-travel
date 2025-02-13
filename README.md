@@ -70,7 +70,7 @@ medi-travel/
 
 ### Clone Repository
 ```sh
-git clone https://github.com/yourusername/medi-travel.git
+git clone git@github.com:Alabs02/medi-travel.git
 cd medi-travel
 ```
 
