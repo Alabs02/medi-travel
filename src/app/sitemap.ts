@@ -5,7 +5,7 @@ export const BASE_URL =
   (isDevMode() ? "http://localhost:8050" : "https://meditravel.vercel.app");
 
 export default async function sitemap() {
-  const staticRoutes = ["/", "/auth/login", "/auth/register"].map((route) => ({
+  const staticRoutes = ["/", "/auth/login", "/auth/register", "/health-insights", "/our-mission"].map((route) => ({
     url: `${BASE_URL}${route}`,
     lastModified: new Date().toISOString().split("T")[0],
     changefreq: "weekly",
