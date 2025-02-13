@@ -20,6 +20,7 @@ import {
 import { IconLogout } from "@tabler/icons-react";
 import { useRouter } from "next/navigation";
 import { useAuthStore } from "@/store/auth";
+import { Portal } from "@radix-ui/react-portal";
 
 const Toolbar = () => {
   const router = useRouter();
@@ -115,16 +116,18 @@ const Toolbar = () => {
                 </motion.button>
               </DropdownMenuTrigger>
 
-              <DropdownMenuContent className="w-52 bg-white shadow-[0_0_0_1px] shadow-primary/10 -translate-x-5">
-                <DropdownMenuItem
-                  onClick={onLogout}
-                  className="cursor-pointer hover:bg-muted text-secondary/85"
-                >
-                  <IconLogout />
-                  <span className="font-outfit">Log Out</span>
-                  <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
-                </DropdownMenuItem>
-              </DropdownMenuContent>
+              <Portal>
+                <DropdownMenuContent className="w-52 bg-white shadow-[0_0_0_1px] shadow-primary/10 -translate-x-5">
+                  <DropdownMenuItem
+                    onClick={onLogout}
+                    className="cursor-pointer hover:bg-muted text-secondary/85"
+                  >
+                    <IconLogout />
+                    <span className="font-outfit">Log Out</span>
+                    <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </Portal>
             </DropdownMenu>
           ) : null}
         </div>
