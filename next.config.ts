@@ -104,10 +104,10 @@ const nextConfig: NextConfig = withBundleAnalyzer({
               // },
               { key: "X-XSS-Protection", value: "1; mode=block" },
               { key: "Referrer-Policy", value: "strict-origin" },
-              {
-                key: "Permissions-Policy",
-                value: "geolocation=(), microphone=(), camera=()"
-              },
+              // {
+              //   key: "Permissions-Policy",
+              //   value: "geolocation=(), microphone=(), camera=()"
+              // },
               // {
               //   key: "Content-Security-Policy",
               //   value:
