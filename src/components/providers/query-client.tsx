@@ -4,7 +4,8 @@ import React, { useState } from "react";
 import { AppProgressBar as ProgressBar } from "next-nprogress-bar";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { PageTransition } from "@/layouts";
+import { SpeedInsights } from '@vercel/speed-insights/next';
+import { Analytics } from '@vercel/analytics/next';
 import { Toaster } from "../ui/toaster";
 
 const QueryProvider: React.FC<{ children: React.ReactNode }> = ({
@@ -29,7 +30,9 @@ const QueryProvider: React.FC<{ children: React.ReactNode }> = ({
       <Toaster />
 
       {children}
-      {/* <PageTransition>{children}</PageTransition> */}
+
+      <Analytics />
+      <SpeedInsights />
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   );
