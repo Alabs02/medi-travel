@@ -28,7 +28,8 @@ const QueryProvider: React.FC<{ children: React.ReactNode }> = ({
 
       <Toaster />
 
-      <PageTransition>{children}</PageTransition>
+      {children}
+      {/* <PageTransition>{children}</PageTransition> */}
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   );
