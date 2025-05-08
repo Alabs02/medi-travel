@@ -1,3 +1,4 @@
+import { Roles, RoleTypes } from "@/models/server";
 import { useAuthStore } from "@/store/auth";
 import axios, { AxiosInstance } from "axios";
 
@@ -29,15 +30,19 @@ const createHttpClient = (): AxiosInstance => {
     (response) => response,
     (error) => {
       if (error.response && error.response.status === 401) {
-        const { setTkn, getTkn, logout } = useAuthStore.getState();
+        const { setTkn, getTkn, logout, resetProfile } =
+          useAuthStore.getState();
         console.log({ tkn: getTkn() });
 
-        // setTkn("");
-        // logout();
+        setTkn("");
+        logout();
+        resetProfile();
 
-        // if (window.location.pathname !== "/") {
-        //   window.location.href = "/";
-        // }
+        if (window.location.pathname !== "/") {
+          window.location.href = "/";
+        } else {
+          window.location.href = "/auth/login";
+        }
       }
 
       return Promise.reject(error);

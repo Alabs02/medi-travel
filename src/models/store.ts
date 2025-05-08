@@ -74,6 +74,8 @@ export type AuthStoreState = {
   setTkn: (_tkn: string) => void;
   setRoles: (roles: Server.Role[]) => void;
   setProfile: (profile: Server.UserProfile) => void;
+
+  resetProfile: () => void;
 };
 
 export type Clinic = {

@@ -26,6 +26,8 @@ const useAuthStore = create<Store.AuthStoreState>()(
         getRoleById: (id: string) =>
           get().roles.find((role) => role.id === id) || null,
 
+        resetProfile: () => set({ profile: {} as Server.UserProfile }),
+
         login: (user, _tkn: string) =>
           set({ user, _tkn, isAuthenticated: true }),
         logout: () => set({ user: null, isAuthenticated: false }),
