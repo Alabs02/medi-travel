@@ -43,10 +43,8 @@ const ClinicPreview = () => {
   const generateClinicGallery = (gallery: string[], title: string) => {
     return gallery.map((g) => ({ src: g, title }));
   };
-  console.log({ clinicSlug });
 
   useEffect(() => {
-    console.log({ isBookmarked });
     if (isBookmarked) {
       toast({
         description: "✅ Clinic saved! Find it in your saved list."

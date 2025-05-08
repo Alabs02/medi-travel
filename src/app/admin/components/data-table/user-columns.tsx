@@ -125,6 +125,8 @@ const RowActions: React.FC<{ row: Row<Server.IUser> }> = ({ row }) => {
 
   const isActive = row.original.isActive;
 
+  console.log({ isActive });
+
   const [edit, setEdit] = useState(false);
   const [enable, setEnable] = useState(false);
   const [disable, setDisable] = useState(false);
@@ -155,7 +157,10 @@ const RowActions: React.FC<{ row: Row<Server.IUser> }> = ({ row }) => {
 
   const handleEditUser = async (values: { name: string; roleId: string }) => {
     onEdit(
-      { id: userId, payload: { ...values, photoUrl: "" } },
+      {
+        id: userId,
+        payload: { ...values, photoUrl: "https://github.com/shadcn.png" }
+      },
       {
         onSuccess: () => {
           setTimeout(() => {
@@ -174,7 +179,7 @@ const RowActions: React.FC<{ row: Row<Server.IUser> }> = ({ row }) => {
           variant="info"
           disabled={!isActive}
           onClick={() => setEdit(true)}
-          className="py-1.5 px-3 rounded-full !shadow-info/35 hover:!shadow-info/35 !text-info disabled:opacity-65"
+          className="py-1.5 px-3 rounded-full !shadow-info/35 hover:!shadow-info/35 !text-info disabled:opacity-50"
         >
           <IconEditCircle size={20} />
           <span className="font-outfit text-sm">Edit</span>
@@ -182,9 +187,9 @@ const RowActions: React.FC<{ row: Row<Server.IUser> }> = ({ row }) => {
 
         <Motion.OutlinedButton
           type="button"
-          disabled={!isActive}
+          disabled={isActive}
           onClick={() => setEnable(true)}
-          className="py-1.5 px-3 rounded-full !shadow-accent/35 !text-accent disabled:opacity-65"
+          className="py-1.5 px-3 rounded-full !shadow-accent/35 !text-accent disabled:opacity-50"
         >
           <ToggleRight size={20} />
           <span className="font-outfit text-sm">Enable</span>
@@ -193,9 +198,9 @@ const RowActions: React.FC<{ row: Row<Server.IUser> }> = ({ row }) => {
         <Motion.OutlinedButton
           type="button"
           variant="destructive"
-          disabled={isActive}
+          disabled={!isActive}
           onClick={() => setDisable(true)}
-          className="py-1.5 px-3 rounded-full !shadow-destructive/35 hover:!shadow-destructive/35 !text-destructive disabled:opacity-65"
+          className="py-1.5 px-3 rounded-full !shadow-destructive/35 hover:!shadow-destructive/35 !text-destructive disabled:opacity-50"
         >
           <ToggleLeft size={20} />
           <span className="font-outfit text-sm">Disable</span>
@@ -303,8 +308,6 @@ export const EditUserDialog = ({
   onSubmitEdit
 }: UI.EditUserDialogProps) => {
   const { getAllRoles } = useAuthStore();
-
-  console.log({ roles: getAllRoles() });
 
   const formik = useFormik({
     initialValues: {

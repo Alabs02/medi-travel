@@ -85,8 +85,6 @@ export const useLogin = () => {
 
         login(payload, _tkn);
 
-        console.log({ _tkn });
-
         setTimeout(() => {
           toast({
             title: "Welcome Back! 🎉",
