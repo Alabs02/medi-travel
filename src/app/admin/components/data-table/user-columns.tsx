@@ -123,6 +123,8 @@ export const userColumns: ColumnDef<Server.IUser>[] = [
 const RowActions: React.FC<{ row: Row<Server.IUser> }> = ({ row }) => {
   const userId = row.original.id;
 
+  const isActive = row.original.isActive;
+
   const [edit, setEdit] = useState(false);
   const [enable, setEnable] = useState(false);
   const [disable, setDisable] = useState(false);
@@ -170,8 +172,9 @@ const RowActions: React.FC<{ row: Row<Server.IUser> }> = ({ row }) => {
         <Motion.OutlinedButton
           type="button"
           variant="info"
+          disabled={!isActive}
           onClick={() => setEdit(true)}
-          className="py-1.5 px-3 rounded-full !shadow-info/35 hover:!shadow-info/35 !text-info"
+          className="py-1.5 px-3 rounded-full !shadow-info/35 hover:!shadow-info/35 !text-info disabled:opacity-65"
         >
           <IconEditCircle size={20} />
           <span className="font-outfit text-sm">Edit</span>
@@ -179,8 +182,9 @@ const RowActions: React.FC<{ row: Row<Server.IUser> }> = ({ row }) => {
 
         <Motion.OutlinedButton
           type="button"
+          disabled={!isActive}
           onClick={() => setEnable(true)}
-          className="py-1.5 px-3 rounded-full !shadow-accent/35 !text-accent"
+          className="py-1.5 px-3 rounded-full !shadow-accent/35 !text-accent disabled:opacity-65"
         >
           <ToggleRight size={20} />
           <span className="font-outfit text-sm">Enable</span>
@@ -189,8 +193,9 @@ const RowActions: React.FC<{ row: Row<Server.IUser> }> = ({ row }) => {
         <Motion.OutlinedButton
           type="button"
           variant="destructive"
+          disabled={isActive}
           onClick={() => setDisable(true)}
-          className="py-1.5 px-3 rounded-full !shadow-destructive/35 hover:!shadow-destructive/35 !text-destructive"
+          className="py-1.5 px-3 rounded-full !shadow-destructive/35 hover:!shadow-destructive/35 !text-destructive disabled:opacity-65"
         >
           <ToggleLeft size={20} />
           <span className="font-outfit text-sm">Disable</span>
