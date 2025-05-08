@@ -49,7 +49,12 @@ const Login = () => {
         onSubmit={async (values, { setSubmitting, setErrors }) => {
           try {
             const response = await mutateAsync(values);
-            if (response?.email) router.push("/");
+
+            if (response?.email) {
+              setTimeout(() => {
+                router.push("/");
+              }, 200);
+            }
           } catch (error: any) {
             console.log({ error });
             setErrors({

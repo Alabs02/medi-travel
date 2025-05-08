@@ -1,0 +1,8 @@
+{
+  "editor.tabSize": 2,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.indentSize": "tabSize",
+  "editor.bracketPairColorization.enabled": true,
+  "editor.formatOnSave": true
+  // "editor.formatOnPaste": true
+}

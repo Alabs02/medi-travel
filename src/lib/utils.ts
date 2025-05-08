@@ -1,6 +1,10 @@
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 
+import { format, parseISO, isValid } from "date-fns";
+import startCase from "lodash/startCase";
+import upperCase from "lodash/upperCase";
+
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
@@ -8,6 +12,63 @@ export function cn(...inputs: ClassValue[]) {
 export function isDevMode() {
   return process.env.NODE_ENV === "development";
 }
+
+export const formatValue = (value: any) => {
+  if (typeof value === "boolean") {
+    return value ? "Yes" : "No";
+  }
+  return value ?? "N/A";
+};
+
+export const formatDate = (value: string | Date | null | undefined) => {
+  if (!value) return "N/A";
+
+  const date = typeof value === "string" ? parseISO(value) : value;
+
+  return isValid(date) ? format(date, "dd/MM/yyyy") : "N/A";
+};
+
+export const formatCurrency = (
+  amount: string | number | null | undefined
+): string => {
+  const numericAmount = Number(amount);
+
+  return isNaN(numericAmount) || numericAmount === 0
+    ? "N/A"
+    : new Intl.NumberFormat("en-US", {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+        useGrouping: true
+      }).format(numericAmount);
+};
+
+export const formatCurrencyWithSign = (
+  amount: string | number | null | undefined,
+  currency: string = "NGN"
+): string => {
+  const numericAmount = Number(amount);
+
+  return isNaN(numericAmount) || numericAmount === 0
+    ? "N/A"
+    : new Intl.NumberFormat("en-US", {
+        style: "currency",
+        currency,
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+      }).format(numericAmount);
+};
+
+export const render = (value: any, isDate = false) => {
+  if (isDate) {
+    return formatDate(value);
+  } else return formatValue(value);
+};
+
+export const formatText = (text: string | null | undefined): string => {
+  if (!text) return "N/A";
+
+  return upperCase(startCase(text));
+};
 
 export const getSavingsCopy = (
   estimateCost: number,
@@ -39,6 +100,10 @@ export const getSavingsCopy = (
     return `High-quality care, lower costs.`;
   }
 };
+
+export function formatTotalCount(count: number): string {
+  return count.toLocaleString();
+}
 
 export function formatNumber(
   num: number,

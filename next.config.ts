@@ -14,7 +14,7 @@ const nextConfig: NextConfig = withBundleAnalyzer({
       "source.unsplash.com",
       "plus.unsplash.com",
       "res.cloudinary.com",
-      "ui-avatars.com",
+      "ui-avatars.com"
     ],
     remotePatterns: [
       {
@@ -47,7 +47,7 @@ const nextConfig: NextConfig = withBundleAnalyzer({
       },
       {
         protocol: "https",
-        hostname: "ui-avatars.com",
+        hostname: "avatars.githubusercontent.com",
         port: "",
         pathname: "/**",
         search: ""
@@ -95,7 +95,7 @@ const nextConfig: NextConfig = withBundleAnalyzer({
               {
                 key: "Cache-Control",
                 value: "public, max-age=31536000, immutable"
-              },
+              }
               // { key: "X-Content-Type-Options", value: "nosniff" },
               // { key: "X-Frame-Options", value: "SAMEORIGIN" },
               // {

@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { Store } from "@/models";
+import { Server, Store } from "@/models";
 import { indexedDBStorage } from "@/lib";
 import { createJSONStorage, devtools, persist } from "zustand/middleware";
 
@@ -8,14 +8,30 @@ const useAuthStore = create<Store.AuthStoreState>()(
     persist(
       (set, get) => ({
         user: null,
+        _tkn: "",
+        roles: [],
+        profile: {} as Server.UserProfile,
         isAuthenticated: false,
 
-        getUser: () => get().user,
-        getIsAuthenticated: () => get().isAuthenticated,
+        getProfile: () => get().profile,
+        setProfile: (profile: Server.UserProfile) => set({ profile }),
 
-        login: (user) => set({ user, isAuthenticated: true }),
+        hasRoles: () => get().roles.length > 0,
+        hasTkn: () => get()._tkn !== "",
+
+        getTkn: () => get()._tkn,
+        getUser: () => get().user,
+        getAllRoles: () => get().roles,
+        getIsAuthenticated: () => get().isAuthenticated,
+        getRoleById: (id: string) =>
+          get().roles.find((role) => role.id === id) || null,
+
+        login: (user, _tkn: string) =>
+          set({ user, _tkn, isAuthenticated: true }),
         logout: () => set({ user: null, isAuthenticated: false }),
-        register: (user) => set({ user, isAuthenticated: true })
+        register: (user) => set({ user, isAuthenticated: true }),
+        setRoles: (roles: Server.Role[]) => set({ roles }),
+        setTkn: (_tkn: string) => set({ _tkn })
       }),
       {
         name: "medi-travel/auth-store",

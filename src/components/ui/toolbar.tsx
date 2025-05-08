@@ -12,13 +12,14 @@ import { motion } from "framer-motion";
 import { createPortal } from "react-dom";
 import { IconLogout } from "@tabler/icons-react";
 import { useAuthStore } from "@/store/auth";
+import { isEmpty } from "@/_";
 
 const Toolbar = () => {
   const router = useRouter();
   const pathname = usePathname();
   const isHome = pathname === "/";
   const TitleTag = isHome ? "h1" : "span";
-  const { getUser, getIsAuthenticated } = useAuthStore();
+  const { getUser, getIsAuthenticated, getProfile } = useAuthStore();
   const { mutateAsync } = useLogout();
   const [scrolled, setScrolled] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -27,6 +28,21 @@ const Toolbar = () => {
 
   const avatarRef = useRef<HTMLButtonElement | null>(null);
   const dropdownRef = useRef<HTMLDivElement | null>(null);
+
+  const isAdmin = () => {
+    const profile = getProfile();
+
+    if (!profile || isEmpty(profile)) {
+      return false;
+    }
+
+    const roleName = profile?.role?.name;
+    if (typeof roleName !== "string") {
+      return false;
+    }
+
+    return roleName.trim().toLowerCase() === "admin";
+  };
 
   const onLogout = async () => {
     await mutateAsync();
@@ -43,7 +59,7 @@ const Toolbar = () => {
     const rect = avatarRef.current.getBoundingClientRect();
     setDropdownPosition({
       top: rect.bottom + 8,
-      left: rect.left - 60,
+      left: rect.left - 60
     });
     setDropdownOpen((prev) => !prev);
   };
@@ -73,8 +89,8 @@ const Toolbar = () => {
     setDropdownReady(true);
 
     return () => {
-    setDropdownReady(false);
-    }
+      setDropdownReady(false);
+    };
   }, []);
 
   useEffect(() => {
@@ -132,11 +148,20 @@ const Toolbar = () => {
             href={""}
             label="Our Mission"
           />
-          <Motion.Button type="button">
+
+          {isAdmin() ? (<Link href={"/admin"} passHref>
+            <Motion.Button type="button">
+              <span className="text-cta text-normal text-pretty">
+                Go to Admin Panel
+              </span>
+            </Motion.Button>
+          </Link>) : (
+            <Motion.Button type="button">
             <span className="text-cta text-normal text-pretty">
               Book a Consultation
             </span>
           </Motion.Button>
+          )}
 
           {getIsAuthenticated() && (
             <motion.button
@@ -150,13 +175,18 @@ const Toolbar = () => {
               transition={{ duration: 0.25, ease: "easeInOut" }}
               className="size-10 relative border-none rounded-full grid place-items-center bg-accent/20 !text-accent font-outfit font-semibold overflow-hidden shadow-[0_0_0_1px] shadow-accent/25 focus-visible:outline-none"
             >
-              <p>{getInitials(getUser()?.displayName || "")}</p>
+              <p>
+                {getInitials(
+                  getProfile()?.name || getUser()?.displayName || "Admin"
+                )}
+              </p>
             </motion.button>
           )}
         </div>
       </div>
 
-      {dropdownOpen && dropdownReady &&
+      {dropdownOpen &&
+        dropdownReady &&
         createPortal(
           <div
             ref={dropdownRef}
@@ -164,7 +194,7 @@ const Toolbar = () => {
             style={{
               top: dropdownPosition.top,
               left: dropdownPosition.left,
-              position: "fixed",
+              position: "fixed"
             }}
           >
             <motion.div

@@ -34,7 +34,9 @@ import {
   toast,
   useClinics,
   useSpoolCountries,
-  useSpoolStates
+  useSpoolRoles,
+  useSpoolStates,
+  useSpoolUserProfile
 } from "@/hooks";
 import { ClinicCardSkeleton } from "@/components/skeletons";
 import { useRouter } from "next/navigation";
@@ -43,6 +45,8 @@ import { useAuthStore } from "@/store/auth";
 const Home = () => {
   useSpoolCountries();
   useSpoolStates();
+  useSpoolRoles();
+  useSpoolUserProfile();
 
   const router = useRouter();
   const [openLocationBox, setOpenLocationBox] = useState(false);

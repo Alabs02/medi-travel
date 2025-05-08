@@ -45,7 +45,7 @@ const useSpoolStates = () => {
       setTimeout(() => setStates(newStates), 2000);
       return newStates;
     },
-    staleTime: 1000 * 60 * 5
+    staleTime: 1000 * 60 * 10
   });
 };
 

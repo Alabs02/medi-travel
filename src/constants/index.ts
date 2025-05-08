@@ -8,7 +8,8 @@ export const ImagePaths = {
   BLOOMBERG_LOGO: "/images/blloomberg.webp",
   THE_GUARDIAN_LOGO: "/images/the-guardian.webp",
   MEDI_TRAVEL_HERO: "/images/medi-travel-hero.webp",
-  EMPTY_STATE: "/images/empty-state.svg"
+  EMPTY_STATE: "/images/empty-state.svg",
+  LOADER: "/images/loader.svg"
 };
 
 export const seo = {
@@ -91,5 +92,7 @@ export const whileTapOptions = {
     duration: 0.03
   }
 };
+
+export const successCodes = [200, 201, 202, 204];
 
 export * from "./api.routes";

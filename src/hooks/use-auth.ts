@@ -59,12 +59,13 @@ export const registerAction = async (
 
 export const checkAuthAction = (): Promise<User | null> => {
   return new Promise((resolve) => {
-    onAuthStateChanged(auth, (user) => {
+    onAuthStateChanged(auth, async (user) => {
       const { login, logout } = useAuthStore.getState();
       if (isEmpty(user)) {
         logout();
       } else {
-        login(user);
+        const _tkn = await user.getIdToken();
+        login(user, _tkn);
       }
       resolve(user);
     });
@@ -78,9 +79,13 @@ export const useLogin = () => {
     mutationKey: ["login"],
     mutationFn: ({ email, password }: { email: string; password: string }) =>
       loginAction(email, password),
-    onSuccess: (payload: User) => {
+    onSuccess: async (payload: User) => {
       if (payload) {
-        login(payload);
+        const _tkn = await payload.getIdToken();
+
+        login(payload, _tkn);
+
+        console.log({ _tkn });
 
         setTimeout(() => {
           toast({

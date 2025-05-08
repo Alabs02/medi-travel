@@ -1,4 +1,5 @@
 import { User } from "firebase/auth";
+import { Server } from ".";
 
 export type Location = {
   id: string;
@@ -52,14 +53,27 @@ export type QueryStore = {
 
 export type AuthStoreState = {
   user: User | null;
+  _tkn: string;
+  roles: Server.Role[];
+  profile: Server.UserProfile;
   isAuthenticated: boolean;
 
+  hasTkn: () => boolean;
+  hasRoles: () => boolean;
+
+  getTkn: () => string;
   getUser: () => User | null;
   getIsAuthenticated: () => boolean;
+  getAllRoles: () => Server.Role[];
+  getProfile: () => Server.UserProfile;
+  getRoleById: (id: string) => Server.Role | null;
 
-  login: (user: User) => void;
+  login: (user: User, _tkn: string) => void;
   register: (user: User) => void;
   logout: () => void;
+  setTkn: (_tkn: string) => void;
+  setRoles: (roles: Server.Role[]) => void;
+  setProfile: (profile: Server.UserProfile) => void;
 };
 
 export type Clinic = {
@@ -86,4 +100,41 @@ export type ClinicStore = {
   getClinics: () => Clinic[];
   setClinics: (clinics: Clinic[]) => void;
   resetClinics: () => void;
+};
+
+export type AnalyticStoreState = {
+  totalUsers: number;
+  activeUsers: number;
+  inactiveUsers: number;
+  deletedUsers: number;
+  totalClinics: number;
+
+  getAllUsersAnalytics: () => {
+    totalUsers: number;
+    activeUsers: number;
+    inactiveUsers: number;
+    deletedUsers: number;
+  };
+
+  getClinicAnalytics: () => {
+    totalClinics: number;
+  };
+
+  setAllStats: (stats: Partial<AnalyticStoreState>) => void;
+};
+
+export type UserStoreState = {
+  total: number;
+  page: number;
+  limit: number;
+  users: Server.IUser[];
+
+  getUsers: () => Server.IUser[];
+  getPaginationStats: () => {
+    total: number;
+    page: number;
+    limit: number;
+  };
+
+  setAll: (data: Partial<UserStoreState>) => void;
 };
