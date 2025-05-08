@@ -24,15 +24,22 @@ import { Motion } from "@/components/ui";
 import { useLogout } from "@/hooks";
 import { useRouter } from "next/navigation";
 import { cn } from "@/lib";
+import { useAuthStore } from "@/store/auth";
 
 export const AdminSidePanel = () => {
   const pathname = usePathname();
   const router = useRouter();
   const { open } = useSidebar();
   const { mutateAsync, isPending } = useLogout();
+  const { setTkn, resetProfile, logout } = useAuthStore();
 
   const onLogout = async () => {
     await mutateAsync();
+
+    setTkn("");
+    resetProfile();
+    logout();
+
     setTimeout(() => {
       router.replace("/");
     }, 200);

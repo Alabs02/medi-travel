@@ -32,7 +32,6 @@ const createHttpClient = (): AxiosInstance => {
       if (error.response && error.response.status === 401) {
         const { setTkn, getTkn, logout, resetProfile } =
           useAuthStore.getState();
-        console.log({ tkn: getTkn() });
 
         setTkn("");
         logout();

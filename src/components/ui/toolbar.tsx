@@ -19,7 +19,14 @@ const Toolbar = () => {
   const pathname = usePathname();
   const isHome = pathname === "/";
   const TitleTag = isHome ? "h1" : "span";
-  const { getUser, getIsAuthenticated, getProfile } = useAuthStore();
+  const {
+    getUser,
+    getIsAuthenticated,
+    getProfile,
+    resetProfile,
+    setTkn,
+    logout
+  } = useAuthStore();
   const { mutateAsync } = useLogout();
   const [scrolled, setScrolled] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -46,6 +53,10 @@ const Toolbar = () => {
 
   const onLogout = async () => {
     await mutateAsync();
+
+    setTkn("");
+    resetProfile();
+    logout();
 
     setTimeout(() => {
       setDropdownOpen(false);
@@ -149,18 +160,20 @@ const Toolbar = () => {
             label="Our Mission"
           />
 
-          {isAdmin() ? (<Link href={"/admin"} passHref>
+          {isAdmin() ? (
+            <Link href={"/admin"} passHref>
+              <Motion.Button type="button">
+                <span className="text-cta text-normal text-pretty">
+                  Go to Admin Panel
+                </span>
+              </Motion.Button>
+            </Link>
+          ) : (
             <Motion.Button type="button">
               <span className="text-cta text-normal text-pretty">
-                Go to Admin Panel
+                Book a Consultation
               </span>
             </Motion.Button>
-          </Link>) : (
-            <Motion.Button type="button">
-            <span className="text-cta text-normal text-pretty">
-              Book a Consultation
-            </span>
-          </Motion.Button>
           )}
 
           {getIsAuthenticated() && (
