@@ -59,9 +59,10 @@ export const CreateUserDialog = ({
         .required("Password is required"),
       roleId: Yup.string().required("Role is required")
     }),
-    onSubmit: async (values) => {
+    onSubmit: async (values, { resetForm }) => {
       await onSubmitCreate(values);
       setTimeout(() => {
+        resetForm();
         onOpenChange(false);
       }, 200);
     }
